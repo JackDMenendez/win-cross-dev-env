@@ -1,0 +1,10 @@
+VCS git
+mingw-w64-clang-x86_64-toolchain mingw-w64-clang-x86_64-clang-analyzer
+mingw-w64-clang-x86_64-toolchain mingw-w64-clang-x86_64-clang-tools-extra
+mingw-w64-ucrt-x86_64-texlive-full mingw-w64-ucrt-x86_64-texlive-latex-extra
+mingw-w64-ucrt-x86_64-texlive-scheme-full mingw-w64-ucrt-x86_64-texlive-latex-extra
+mingw-w64-x86_64-toolchain mingw-w64-x86_64-gdb-multiarch
+mingw-w64-x86_64-toolchain mingw-w64-x86_64-libmangle
+mingw-w64-x86_64-toolchain mingw-w64-x86_64-make
+mingw-w64-x86_64-toolchain mingw-w64-x86_64-tools
+mingw-w64-x86_64-toolchain mingw-w64-x86_64-winstorecompat

@@ -1,0 +1,9 @@
+{
+    "makefile.configureOnOpen": false,
+    "terminal.integrated.defaultProfile.windows": "UCRT64",
+    "terminal.integrated.profiles.windows": {
+        "UCRT64": {
+            "path": "C:\\dev-shell\\shells\\windows\\cmd\\ucrt64.cmd"
+        }
+    }
+}

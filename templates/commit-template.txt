@@ -1,0 +1,28 @@
+
+
+git config --global commit.template ~/.gitmessage
+Then create ~/.gitmessage with:
+
+
+
+# Subject (imperative, <= 72 chars): summarise what changes.
+
+# WHY: what problem prompted this change?
+
+# WHAT: bullet list of the substantive changes (only if non-obvious from diff).
+
+# CONSEQUENCES: anything future-you needs to know — invariants broken,
+# new dependencies, calibration changes, performance notes.
+
+# Refs / version: e.g., v0.95-RC, exp_19c, fig:dirac_cones.
+The # lines are git comments and won't appear in the message. They're prompts that disappear when you delete or replace them. After a few weeks you'll know the structure by heart.
+
+3. Adopt one consistent vocabulary for the subject. Conventional Commits is one option:
+
+
+<type>(<scope>): <subject>
+
+types: paper, exp, fig, build, docs, refactor, fix, release
+So instead of cleanup pictures you'd write fig: re-render harmonics + dirac cones in light theme for print. Instead of makefile changes. you'd write build: consolidate 5 makefiles into root + experiments. Future you running git log --grep=^fig: finds every figure change in seconds.
+
+You don't have to use Conventional Commits specifically — the value is picking one structure and keeping it.
