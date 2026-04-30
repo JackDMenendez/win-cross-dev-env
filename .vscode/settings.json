@@ -1,5 +1,8 @@
 {
     "python.defaultInterpreterPath": "C:/dev/wcde/.venv-win/Scripts/python.exe",
     "terminal.integrated.defaultProfile.windows": "PowerShell",
-    "files.eol": "crlf"
+    "files.eol": "crlf",
+    "chat.tools.terminal.autoApprove": {
+        "rename-item": true
+    }
 }

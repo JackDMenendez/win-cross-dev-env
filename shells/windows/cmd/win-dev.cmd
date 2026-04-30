@@ -40,7 +40,7 @@ if defined WIN_DEV_ACTIVATE (
     %ComSpec% /k "title Windows Dev Shell"
 )
 set WIN_DEV_RC=%errorlevel%
-call "%~dp0lib\restore-prompt.cmd"
+call "%~dp0tools\restore-prompt.cmd"
 if %WIN_DEV_RC% neq 0 (
     echo Windows Dev Shell exited with code %WIN_DEV_RC%
 )

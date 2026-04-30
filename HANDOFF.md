@@ -29,7 +29,7 @@ This was aligned so subsystem shells behave more like `win-dev.cmd` when no subs
 
 ## Recent Changes
 
-- Fixed stale `create-manifest.sh` wrapper paths to point at the shared helper in `shells/bash/lib/`.
+ - Fixed stale `create-manifest.sh` wrapper paths to point at the shared helper in `shells/bash/tools/`.
 - Fixed bash-side venv selection so UCRT64 and other subsystem shells can fall back to generic `.venv` locations.
 - Updated bash helper scripts used for activation, reporting, VS Code setup, and repo setup to use the same precedence.
 - Removed hardcoded `C:\dev-shell` and `/c/dev-shell` assumptions from the shell stack.
@@ -45,12 +45,12 @@ This was aligned so subsystem shells behave more like `win-dev.cmd` when no subs
 - `shells/windows/cmd/env/mingw64-env.cmd`
 - `shells/windows/cmd/env/clang64-env.cmd`
 - `shells/windows/cmd/env/msys64-env.cmd`
-- `shells/bash/lib/startup-venv.sh`
-- `shells/bash/lib/set-active-venv.sh`
-- `shells/bash/lib/show-active-venv.sh`
-- `shells/bash/lib/repo-setup.sh`
-- `shells/bash/lib/setup-vscode.sh`
-- `shells/bash/lib/create-manifest.sh`
+ - `shells/bash/tools/startup-venv.sh`
+ - `shells/bash/tools/set-active-venv.sh`
+ - `shells/bash/tools/show-active-venv.sh`
+ - `shells/bash/tools/repo-setup.sh`
+ - `shells/bash/tools/setup-vscode.sh`
+ - `shells/bash/tools/create-manifest.sh`
 
 ## Recommended Validation After Moving Or Recloning
 

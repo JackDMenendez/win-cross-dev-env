@@ -9,7 +9,7 @@ rem --- This is a pure Windows shell with Strawberry Perl ---
 rem --- Launch a native Windows command prompt ---
 %ComSpec% /k "title Windows Perl Shell"
 set WIN_PERL_RC=%errorlevel%
-call "%~dp0lib\restore-prompt.cmd"
+call "%~dp0tools\restore-prompt.cmd"
 if %WIN_PERL_RC% neq 0 (
     echo Windows Perl Shell exited with code %WIN_PERL_RC%
 )

@@ -1,9 +1,0 @@
-{
-    "terminal.integrated.defaultProfile.windows": "MINGW64",
-    "terminal.integrated.profiles.windows": {
-        "MINGW64": {
-            "path": "C:\\dev-shell\\shells\\windows\\cmd\\mingw64.cmd"
-        }
-    }
-}
-

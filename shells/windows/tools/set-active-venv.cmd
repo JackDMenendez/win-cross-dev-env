@@ -1,0 +1,35 @@
+@echo off
+set "DEV_SHELL_SUBSYSTEM=%DEV_SHELL_SUBSYSTEM%"
+if not defined DEV_SHELL_SUBSYSTEM set "DEV_SHELL_SUBSYSTEM=WINDOWS"
+
+set "DEV_SHELL_VENV_SUFFIX=%DEV_SHELL_VENV_SUFFIX%"
+if not defined DEV_SHELL_VENV_SUFFIX set "DEV_SHELL_VENV_SUFFIX=win"
+
+set "DEV_SHELL_DEFAULT_VENV=%DEV_SHELL_DEFAULT_VENV%"
+if not defined DEV_SHELL_DEFAULT_VENV set "DEV_SHELL_DEFAULT_VENV=%USERPROFILE%\.venv-%DEV_SHELL_VENV_SUFFIX%"
+
+set "SET_ACTIVE_VENV_TARGET=%~1"
+set "SET_ACTIVE_VENV_KIND=explicit"
+
+if not defined SET_ACTIVE_VENV_TARGET (
+    if exist "%CD%\.venv-%DEV_SHELL_VENV_SUFFIX%\Scripts\activate.bat" (
+        set "SET_ACTIVE_VENV_TARGET=%CD%\.venv-%DEV_SHELL_VENV_SUFFIX%"
+        set "SET_ACTIVE_VENV_KIND=local"
+    ) else (
+        set "SET_ACTIVE_VENV_TARGET=%DEV_SHELL_DEFAULT_VENV%"
+        set "SET_ACTIVE_VENV_KIND=default"
+    )
+)
+
+if not exist "%SET_ACTIVE_VENV_TARGET%\Scripts\activate.bat" (
+    echo Virtual environment not found: %SET_ACTIVE_VENV_TARGET%
+    exit /b 1
+)
+
+call "%SET_ACTIVE_VENV_TARGET%\Scripts\activate.bat"
+set "DEV_SHELL_ACTIVE_VENV_KIND=%SET_ACTIVE_VENV_KIND%"
+set "DEV_SHELL_ACTIVE_VENV_PATH=%SET_ACTIVE_VENV_TARGET%"
+
+set "SET_ACTIVE_VENV_TARGET="
+set "SET_ACTIVE_VENV_KIND="
+exit /b 0

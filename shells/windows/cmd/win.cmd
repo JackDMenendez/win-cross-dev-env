@@ -16,7 +16,7 @@ rem --- This is a pure Windows minimal working shell ---
 rem --- Launch a native Windows command prompt ---
 %ComSpec% /k "title Windows Minimal Shell"
 set WIN_RC=%errorlevel%
-call "%~dp0lib\restore-prompt.cmd"
+call "%~dp0tools\restore-prompt.cmd"
 if %WIN_RC% neq 0 (
     echo Windows Minimal Shell exited with code %WIN_RC%
 )
