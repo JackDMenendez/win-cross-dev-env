@@ -8,6 +8,6 @@ if [ -z "$_dev_shell_wrapper_dir" ] || [ "$_dev_shell_wrapper_dir" = "${BASH_SOU
 fi
 
 # shellcheck disable=SC1091
-. "$(cd "$_dev_shell_wrapper_dir" && pwd)/../../lib/startup-venv.sh"
+. "$(cd "$_dev_shell_wrapper_dir" && pwd)/../../tools/startup-venv.sh"
 
 unset _dev_shell_wrapper_dir

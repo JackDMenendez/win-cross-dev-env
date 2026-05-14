@@ -1,9 +1,17 @@
 @echo off
 rem Global Variables Provided For Convenience of Windows Command Shells
 rem --- Global variables shared by all environments ---
+:: --- Idempotency Guard --- 
+:: Reentrant calls to this script will be no-ops, preventing infinite loops 
+:: and redundant processing.
 if not "%SHELL_GLOBAL_VAR%0"=="0" exit /b 0
 set SHELL_GLOBAL_VAR=1
-
+rem --- Set default MSYSTEM like MSYS2-based tools but for cmd shell use. ---
+:: This variable is reset as needed by MYSY2 environment.
+:: It is used by some tools to determine the virtual environment they are
+:: running in, and to adjust their behavior accordingly.
+set MSYSTEM=WIN64
+rem --- Commonly used environment variables with defaults if not already set ---
 if not defined CHOCOLATEY_PATH set "CHOCOLATEY_PATH=%ChocolateyInstall%"
 if not defined MY_DEV_ROOT set "MY_DEV_ROOT=%USERPROFILE%\dev"
 if not defined MY_TOOLS set "MY_TOOLS=%USERPROFILE%\tools"

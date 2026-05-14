@@ -1,3 +1,4 @@
+rem win-dev.cmd - Launch Windows Dev %CompSpec% Shell
 @echo off
 setlocal
 set WIN_DEV_RC=0
@@ -7,24 +8,8 @@ set "DEV_SHELL_DEFAULT_VENV=%USERPROFILE%\.venv-win"
 set "DEV_SHELL_VENV_SUFFIX=win"
 set "DEV_SHELL_ACTIVE_VENV_KIND="
 set "DEV_SHELL_ACTIVE_VENV_PATH="
-
-if exist "%CD%\.venv-win\Scripts\activate.bat" (
-    set "WIN_DEV_ACTIVATE=%CD%\.venv-win\Scripts\activate.bat"
-    set "DEV_SHELL_ACTIVE_VENV_KIND=local"
-    set "DEV_SHELL_ACTIVE_VENV_PATH=%CD%\.venv-win"
-) else if exist "%CD%\.venv\Scripts\activate.bat" (
-    set "WIN_DEV_ACTIVATE=%CD%\.venv\Scripts\activate.bat"
-    set "DEV_SHELL_ACTIVE_VENV_KIND=local"
-    set "DEV_SHELL_ACTIVE_VENV_PATH=%CD%\.venv"
-) else if exist "%DEV_SHELL_DEFAULT_VENV%\Scripts\activate.bat" (
-    set "WIN_DEV_ACTIVATE=%DEV_SHELL_DEFAULT_VENV%\Scripts\activate.bat"
-    set "DEV_SHELL_ACTIVE_VENV_KIND=default"
-    set "DEV_SHELL_ACTIVE_VENV_PATH=%DEV_SHELL_DEFAULT_VENV%"
-) else if exist "%USERPROFILE%\.venv\Scripts\activate.bat" (
-    set "WIN_DEV_ACTIVATE=%USERPROFILE%\.venv\Scripts\activate.bat"
-    set "DEV_SHELL_ACTIVE_VENV_KIND=default"
-    set "DEV_SHELL_ACTIVE_VENV_PATH=%USERPROFILE%\.venv"
-)
+rem --- Load Python venv activation logic, which sets DEV_SHELL_ACTIVE_VENV_* variables ---
+call "%~dp0lib\python-activate.cmd"
 
 call "%~dp0lib\set-prompt.cmd" dev
 rem --- Load global baseline environment ---

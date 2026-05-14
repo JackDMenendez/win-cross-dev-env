@@ -7,8 +7,11 @@ set SHELL_CHOCO_ENV=1
 call "%~dp0win-dev-env.cmd"
 
 rem --- Windows Shell Basic Working PATH ---
-set "PATH=%PATH%;%CHOCOLATEY_PATH%\bin"
-set "PATH=%PATH%;%~dp0..\..\lib\choco"
+set PATH=%PATH%;%CHOCOLATEY_PATH%\bin
+:: Pick up any tools not covered, like "which"
+set PATH=%path%;C:\tools\gnu\bin
+set PATH=%PATH%;%DEV_SHELL_WIN_PATH%\cmd
+set PATH=%PATH%;%DEV_SHELL_WIN_PATH%\lib
 
 rem --- Return to caller ---
 exit /b 0

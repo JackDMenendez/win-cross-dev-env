@@ -2,6 +2,21 @@
 
 set -euo pipefail
 
+show_help() {
+    echo "Usage: $(basename "$0") [-h|--help]"
+    echo "Builds or rebuilds the canonical Python virtual environment for the current MSYSTEM."
+    echo "It saves the current pip packages (if the venv exists), creates a fresh venv,"
+    echo "upgrades pip, and restores the packages from the saved requirements file."
+    echo ""
+    echo "Environment Variables Used:"
+    echo "  MSYSTEM  - Determines the target subsystem (UCRT64, MINGW64, CLANG64, MSYS)"
+}
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+    show_help
+    exit 0
+fi
+
 case "${MSYSTEM:-}" in
     UCRT64)
         VENV_SUFFIX=ucrt64
