@@ -98,9 +98,11 @@ If your local tool layout differs, set those variables before launching a shell 
 Use the setup helpers to align the editor with the selected shell and interpreter.
 
 - `shells/windows/tools/setup-vscode.cmd`
-- `shells/windows/tools/repo-setup.cmd`
+- `shells/windows/lib/repo-setup.cmd`
 - `shells/bash/tools/setup-vscode.sh`
-- `shells/bash/tools/repo-setup.sh`
+- `shells/bash/lib/repo-setup.sh`
+
+The repo setup helpers clone a repository, prepare `.vscode/settings.json`, and create a local virtual environment by default. Pass `--no-venv` as the optional third argument for repos that do not need Python, such as a theory-only paper or book project.
 
 ## Package Manifests
 

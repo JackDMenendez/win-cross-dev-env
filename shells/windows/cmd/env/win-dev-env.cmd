@@ -6,16 +6,20 @@ set SHELL_WIN_DEV_ENV=1
 
 call "%~dp0win-env.cmd"
 
-rem --- Baseline PATH ---
+rem --- Baseline PATH --- Order matters here
 set PATH=%path%;%ProgramFiles%\Git\cmd
-set PATH=%path%;C:\Python314\Scripts
-set PATH=%path%;C:\Python314
+if exist "%ProgramFiles%\GitHub CLI\gh.exe" set PATH=%path%;%ProgramFiles%\GitHub CLI
+if exist "%ProgramFiles(x86)%\GitHub CLI\gh.exe" set PATH=%path%;%ProgramFiles(x86)%\GitHub CLI
+if exist "%LOCALAPPDATA%\Programs\GitHub CLI\gh.exe" set PATH=%path%;%LOCALAPPDATA%\Programs\GitHub CLI
 set PATH=%path%;%ProgramFiles%\doxygen\bin
 set PATH=%path%;%CHOCOLATEY_PATH%\lib\make\tools\install\bin
 set PATH=%path%;%ProgramFiles%\CMake\bin
 set PATH=%path%;%ProgramFiles%\Tcl\bin
 
 rem --- Compiler environment for pip builds (MSVC) ---
+if exist "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvars64.bat" (
+    call "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvars64.bat"
+)
 set CC=cl.exe
 set CXX=cl.exe
 
