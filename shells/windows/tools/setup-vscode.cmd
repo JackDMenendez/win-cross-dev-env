@@ -16,7 +16,12 @@ mkdir .vscode >nul 2>&1
 
 echo {> .vscode\settings.json
 echo     "python.defaultInterpreterPath": "%PYTHON_JSON%",>> .vscode\settings.json
-echo     "terminal.integrated.defaultProfile.windows": "PowerShell",>> .vscode\settings.json
+echo     "terminal.integrated.defaultProfile.windows": "Command Prompt",>> .vscode\settings.json
+echo     "terminal.integrated.profiles.windows": {>> .vscode\settings.json
+echo         "Command Prompt": {>> .vscode\settings.json
+echo             "path": ["${env:windir}\\Sysnative\\cmd.exe", "${env:windir}\\System32\\cmd.exe"]>> .vscode\settings.json
+echo         }>> .vscode\settings.json
+echo     },>> .vscode\settings.json
 echo     "files.eol": "crlf">> .vscode\settings.json
 echo }>> .vscode\settings.json
 
