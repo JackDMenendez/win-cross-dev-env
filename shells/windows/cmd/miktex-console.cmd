@@ -1,3 +1,4 @@
+:: miktex-console.cmd - Launch the MiKTeX console with the repo baseline Windows environment loaded.
 @echo off
 setlocal
 

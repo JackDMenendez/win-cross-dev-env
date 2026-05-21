@@ -1,3 +1,4 @@
+:: build-repo-venv.cmd - Wrapper that rebuilds a repo-local Windows Python virtual environment.
 @echo off
 setlocal
 

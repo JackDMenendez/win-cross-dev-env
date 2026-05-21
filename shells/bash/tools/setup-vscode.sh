@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# setup-vscode.sh - Write .vscode/settings.json for the current subsystem interpreter and terminal profile.
+
 set -euo pipefail
 
 venv_suffix() {

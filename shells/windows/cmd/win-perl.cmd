@@ -1,3 +1,4 @@
+:: win-perl.cmd - Launch a Windows shell focused on Strawberry Perl tooling.
 @echo off
 setlocal
 set WIN_PERL_RC=0

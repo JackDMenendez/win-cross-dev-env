@@ -1,4 +1,4 @@
-:: git-bash.cmd - Launch git bash shell
+:: git-bash.cmd - Launch Git Bash with the repo's Windows-side PATH bootstrap.
 @echo off
 setlocal
 call "%~dp0env\git-bash-env.cmd"

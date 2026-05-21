@@ -1,3 +1,4 @@
+:: global-var.cmd - Define repo-root and shared convenience variables.
 @echo off
 rem Global Variables Provided For Convenience of Windows Command Shells
 rem --- Global variables shared by all environments ---

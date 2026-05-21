@@ -1,3 +1,4 @@
+:: vscode-ucrt64.cmd - Launch VS Code from a UCRT64-oriented shell session.
 @echo off
 setlocal
 

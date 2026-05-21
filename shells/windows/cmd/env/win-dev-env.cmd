@@ -1,3 +1,4 @@
+:: win-dev-env.cmd - Build the native Windows development PATH and compiler baseline.
 @echo off
 
 if not "%SHELL_WIN_DEV_ENV%0"=="0" exit /b 0

@@ -33,6 +33,8 @@ The main Windows launchers live under `shells/windows/cmd/`.
 - `msys64.cmd`: MSYS2 MSYS shell.
 - `vs-dev.cmd`: Visual Studio development shell.
 
+To see the current command catalog from inside a shell, run `dev-catalog.cmd` in Windows command shells or `dev-catalog.sh` in bash shells. To regenerate the catalog after adding or renaming scripts, run `build-catalog.cmd` or `build-catalog.sh`.
+
 ## Virtual Environment Rules
 
 For bash-based subsystem shells, the active Python environment is selected in this order:

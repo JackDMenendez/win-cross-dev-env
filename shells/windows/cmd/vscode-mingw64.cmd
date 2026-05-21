@@ -1,3 +1,4 @@
+:: vscode-mingw64.cmd - Launch VS Code from a MINGW64-oriented shell plus TeX, SageMath, and Perl tools.
 @echo off
 setlocal
 

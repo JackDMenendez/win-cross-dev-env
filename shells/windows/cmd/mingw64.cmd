@@ -1,4 +1,4 @@
-:: mingw64.cmd - Launch MINGW64 shell
+:: mingw64.cmd - Launch the MSYS2 MINGW64 shell with the repo startup wrapper loaded.
 @echo off
 setlocal
 

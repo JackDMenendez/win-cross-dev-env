@@ -1,3 +1,4 @@
+:: git-bash-env.cmd - Prepare the Windows-side PATH used to start Git Bash.
 @echo off
 rem Basic Windows CLI Env Setup
 if not "%SHELL_GIT_BASH_ENV%0"=="0" exit /b 0

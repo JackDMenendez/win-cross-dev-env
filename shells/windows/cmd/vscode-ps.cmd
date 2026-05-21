@@ -1,3 +1,4 @@
+:: vscode-ps.cmd - Launch VS Code from the native Windows development environment intended for PowerShell use.
 @echo off
 setlocal
 

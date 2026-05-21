@@ -1,3 +1,4 @@
+:: win-env.cmd - Build the baseline Windows shell PATH and repo command access.
 @echo off
 rem Basic Windows CLI Env Setup
 if not "%SHELL_WIN_ENV%0"=="0" exit /b 0

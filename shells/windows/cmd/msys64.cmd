@@ -1,4 +1,4 @@
-:: msys.cmd - Launch MSYS2 shell
+:: msys64.cmd - Launch the MSYS2 MSYS shell with the repo startup wrapper loaded.
 @echo off
 setlocal
 call "%~dp0env\msys64-env.cmd" 

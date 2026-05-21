@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# set-active-venv.sh - Source this helper to activate an explicit, local, or default bash virtual environment.
+
 if [ "${BASH_SOURCE[0]}" = "$0" ]; then
     echo "Source this script instead of executing it: . ${BASH_SOURCE[0]} [venv-path]" >&2
     exit 1

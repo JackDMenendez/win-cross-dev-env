@@ -1,3 +1,4 @@
+:: sagemath.cmd - Launch a SageMath shell after loading the shared repo environment.
 @echo off
 setlocal
 

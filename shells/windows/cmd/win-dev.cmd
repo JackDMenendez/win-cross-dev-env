@@ -1,4 +1,4 @@
-rem win-dev.cmd - Launch Windows Dev %CompSpec% Shell
+:: win-dev.cmd - Launch the main native Windows development shell with automatic venv selection.
 @echo off
 setlocal
 set WIN_DEV_RC=0

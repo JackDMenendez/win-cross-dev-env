@@ -1,3 +1,4 @@
+:: texlive-env.cmd - Prepend TeX Live binaries to PATH.
 @echo off
 
 rem --- isolate tool chain contaminator ---

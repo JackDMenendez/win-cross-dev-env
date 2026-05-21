@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# build-canonical-venv.sh - Rebuild the canonical Python virtual environment for the current bash subsystem.
+
 set -euo pipefail
 
 show_help() {

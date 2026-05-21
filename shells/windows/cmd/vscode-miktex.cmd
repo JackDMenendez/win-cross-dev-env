@@ -1,3 +1,4 @@
+:: vscode-miktex.cmd - Launch VS Code with MiKTeX added to the Windows tool stack.
 @echo off
 setlocal
 

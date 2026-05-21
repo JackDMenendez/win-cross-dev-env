@@ -1,3 +1,4 @@
+:: win-choco-env.cmd - Layer Chocolatey-oriented tooling onto the Windows dev environment.
 @echo off
 rem Basic Windows CLI Env Setup
 if not "%SHELL_CHOCO_ENV%0"=="0" exit /b 0

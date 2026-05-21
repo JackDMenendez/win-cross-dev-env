@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
-# ------------------------------------------------------------
-# verify-subsystems.sh
-# Checks that each MSYS2 prefix only contains packages for that prefix
-# ------------------------------------------------------------
+# verify-subsystems.sh - Check that each MSYS2 prefix only contains packages intended for that subsystem.
 
 set -euo pipefail
 

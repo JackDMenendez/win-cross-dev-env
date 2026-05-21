@@ -1,4 +1,4 @@
-:: ucrt64-env.cmd - Basic Windows CLI Env Setup
+:: ucrt64-env.cmd - Internal helper that prepares environment variables and PATH entries for UCRT64.
 @echo off
 if not "%SHELL_UCRT64_ENV%0"=="0" exit /b 0
 set SHELL_UCRT64_ENV=1

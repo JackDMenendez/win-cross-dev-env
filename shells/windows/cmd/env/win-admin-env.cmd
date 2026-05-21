@@ -1,3 +1,4 @@
+:: win-admin-env.cmd - Extend the baseline Windows PATH for admin shells.
 @echo off
 rem Basic Windows CLI Env Setup
 if not "%SHELL_ADMIN_ENV%0"=="0" exit /b 0

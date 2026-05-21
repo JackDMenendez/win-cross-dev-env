@@ -1,3 +1,4 @@
+:: build-canonical-venv.cmd - Rebuild the canonical per-user Windows Python virtual environment and restore packages.
 @echo off
 setlocal
 

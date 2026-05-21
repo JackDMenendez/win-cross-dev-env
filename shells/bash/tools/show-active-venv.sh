@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# show-active-venv.sh - Report the active or inferred bash Python virtual environment selection.
+
 set -euo pipefail
 
 venv_suffix=${DEV_SHELL_VENV_SUFFIX:-}

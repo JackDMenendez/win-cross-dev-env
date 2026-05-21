@@ -1,4 +1,4 @@
-:: ucrt64.cmd - Launch UCRT64 shell
+:: ucrt64.cmd - Launch the MSYS2 UCRT64 shell with the repo startup wrapper loaded.
 @echo off
 setlocal
 

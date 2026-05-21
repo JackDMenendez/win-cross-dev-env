@@ -1,3 +1,4 @@
+:: setup-vscode.cmd - Write .vscode/settings.json for the native Windows interpreter and terminal profile.
 @echo off
 setlocal
 

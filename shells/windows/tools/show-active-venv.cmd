@@ -1,3 +1,4 @@
+:: show-active-venv.cmd - Report the active or inferred Windows Python virtual environment selection.
 @echo off
 setlocal
 

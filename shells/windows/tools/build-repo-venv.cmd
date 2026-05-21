@@ -1,3 +1,4 @@
+:: build-repo-venv.cmd - Rebuild a repo-local Windows Python virtual environment and restore packages.
 @echo off
 setlocal
 

@@ -1,3 +1,4 @@
+:: vscode-cmd.cmd - Launch VS Code with the full native Windows tool stack layered onto the session.
 @echo off
 setlocal
 

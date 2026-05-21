@@ -1,3 +1,4 @@
+:: win-dev-perl.cmd - Launch the Windows development shell with the Perl toolchain layered in.
 @echo off
 setlocal
 prompt (win-dev)$_$p$g

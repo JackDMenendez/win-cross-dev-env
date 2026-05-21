@@ -1,3 +1,4 @@
+:: restore-prompt.cmd - Restore the previous command prompt.
 @echo off
 rem Subroutine to restore previous prompt
 

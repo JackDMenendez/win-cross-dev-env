@@ -1,3 +1,4 @@
+:: nvim-msys64.cmd - Open Neovim after rebuilding a clean MSYS environment.
 @echo off
 setlocal
 

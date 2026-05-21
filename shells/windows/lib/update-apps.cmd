@@ -1,3 +1,4 @@
+:: update-apps.cmd - Update MSYS2 packages, print the package snapshot, and upgrade Winget and Chocolatey apps.
 call msys64.cmd -c "update-packages.sh"
 type "%USERPROFILE%\msys64-packages.txt"
 echo ---- Updating Winget Apps ----

@@ -1,4 +1,4 @@
-:: global-env.cmd
+:: global-env.cmd - Boot the shared minimal Windows CLI environment.
 @echo off
 :: ---------------------------------------------------------------------------- 
 :: BRIEF: Provide a Global Windows CLI Minimum Environment

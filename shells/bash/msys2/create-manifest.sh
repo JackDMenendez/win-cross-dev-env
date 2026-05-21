@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# create-manifest.sh - Generate the MSYS package manifest through the shared manifest helper.
+
 set -euo pipefail
 
 _dev_shell_wrapper_dir=${BASH_SOURCE[0]%/*}

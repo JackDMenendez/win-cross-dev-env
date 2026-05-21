@@ -1,3 +1,4 @@
+:: sagemath-env.cmd - Prepend SageMath runtime tools to PATH.
 @echo off
 rem ===  S A G E M A T H   E N V ===
 set SAGEMATH_BIN=C:\Program Files\SageMath 10.4\runtime\bin

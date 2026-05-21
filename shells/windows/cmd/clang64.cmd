@@ -1,4 +1,4 @@
-:: clang64.cmd - Launch CLANG64 shell
+:: clang64.cmd - Launch the MSYS2 CLANG64 shell with the repo startup wrapper loaded.
 @echo off
 setlocal
 

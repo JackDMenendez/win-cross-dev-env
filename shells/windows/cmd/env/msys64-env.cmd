@@ -1,5 +1,5 @@
-:: msys64-env.cmd - Basic Windows CLI Env Setup
-echo off
+:: msys64-env.cmd - Internal helper that prepares environment variables and PATH entries for MSYS.
+@echo off
 rem Basic Windows CLI Env Setup
 if not "%SHELL_MSYS64_ENV%0"=="0" exit /b 0
 set SHELL_MSYS64_ENV=1

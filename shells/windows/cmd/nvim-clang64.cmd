@@ -1,3 +1,4 @@
+:: nvim-clang64.cmd - Open Neovim after rebuilding a clean CLANG64 environment.
 @echo off
 setlocal
 

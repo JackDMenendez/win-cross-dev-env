@@ -1,3 +1,4 @@
+:: win-perl-env.cmd - Layer Strawberry Perl onto the Windows dev environment.
 @echo off
 rem Basic Windows CLI Env Setup
 if not "%SHELL_PERL_ENV%0"=="0" exit /b 0

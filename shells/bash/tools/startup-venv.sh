@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Tracks the default per-user venv and repo-local venvs for interactive shells.
+# startup-venv.sh - Keep interactive bash shells synchronized with the preferred local or default virtual environment.
 
 case $- in
     *i*) ;;

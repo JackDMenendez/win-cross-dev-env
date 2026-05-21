@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# create-manifest.sh - Generate the package manifest for the current MSYS2 subsystem.
+
 set -euo pipefail
 
 case "$MSYSTEM" in

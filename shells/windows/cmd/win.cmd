@@ -1,3 +1,4 @@
+:: win.cmd - Launch the minimal native Windows shell with the shared repo command PATH.
 @echo off
 rem setup a basic windows cmdline environments
 rem This shell provide the nvim editer and basic maintenance

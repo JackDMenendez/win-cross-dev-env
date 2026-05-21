@@ -1,3 +1,4 @@
+:: repo-setup.cmd - Clone a repository, prepare VS Code settings, and optionally create a Windows repo venv.
 @echo off
 setlocal
 REM Usage: repo-setup.cmd <github-url> <project-dir> [--no-venv]

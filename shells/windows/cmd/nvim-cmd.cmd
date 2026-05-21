@@ -1,3 +1,4 @@
+:: nvim-cmd.cmd - Open Neovim after rebuilding a clean native Windows development environment.
 @echo off
 setlocal
 

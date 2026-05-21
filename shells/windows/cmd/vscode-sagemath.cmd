@@ -1,3 +1,4 @@
+:: vscode-sagemath.cmd - Launch VS Code with SageMath available in the environment.
 @echo off
 setlocal
 

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# build-repo-venv.sh - Rebuild a repo-local Python virtual environment for the current bash subsystem.
+
 set -euo pipefail
 
 show_help() {

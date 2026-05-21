@@ -1,3 +1,4 @@
+:: set-prompt.cmd - Stamp the prompt with the current shell label.
 @echo off
 rem subroutine to set shell prompt
 rem Must be called within saved local

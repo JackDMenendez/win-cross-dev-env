@@ -1,3 +1,4 @@
+:: nvim-mingw64.cmd - Open Neovim after rebuilding a clean MINGW64 environment.
 @echo off
 setlocal
 

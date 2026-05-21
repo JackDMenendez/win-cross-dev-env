@@ -1,3 +1,4 @@
+:: build-canonical-venv.cmd - Wrapper that rebuilds the canonical Windows Python virtual environment.
 @echo off
 setlocal
 

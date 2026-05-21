@@ -1,3 +1,4 @@
+:: set-active-venv.cmd - Activate an explicit, local, or default Windows Python virtual environment in the current shell.
 @echo off
 set "DEV_SHELL_SUBSYSTEM=%DEV_SHELL_SUBSYSTEM%"
 if not defined DEV_SHELL_SUBSYSTEM set "DEV_SHELL_SUBSYSTEM=WINDOWS"

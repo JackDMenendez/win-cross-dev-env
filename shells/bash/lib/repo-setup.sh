@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# repo-setup.sh - Clone a repository, prepare VS Code settings, and optionally create a subsystem-local repo venv.
 # Usage: repo-setup.sh <github-url> <project-dir> [--no-venv]
 set -euo pipefail
 

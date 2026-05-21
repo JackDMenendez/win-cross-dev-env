@@ -1,3 +1,4 @@
+:: miktex-env.cmd - Prepend MiKTeX binaries to PATH.
 @echo off
 
 if not "%SHELL_MIKTEX_ENV%0"=="0" exit /b 0

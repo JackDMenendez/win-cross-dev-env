@@ -1,3 +1,4 @@
+:: nvim-ucrt64.cmd - Open Neovim after rebuilding a clean UCRT64 environment.
 @echo off
 setlocal
 

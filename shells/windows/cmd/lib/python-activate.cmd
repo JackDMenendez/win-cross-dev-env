@@ -1,4 +1,4 @@
-:: python-activate.cmd - Detect and set environment variables for Python virtual environments
+:: python-activate.cmd - Internal helper that discovers the preferred Windows Python virtual environment.
 @echo off
 if exist "%CD%\.venv-win\Scripts\activate.bat" (
     set "WIN_DEV_ACTIVATE=%CD%\.venv-win\Scripts\activate.bat"

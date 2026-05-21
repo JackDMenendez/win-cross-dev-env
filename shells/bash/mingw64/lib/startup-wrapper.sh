@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# startup-wrapper.sh - Internal shell bootstrap that tags the shell as MINGW64 and loads shared startup logic.
+
 export DEV_SHELL_SUBSYSTEM=MINGW64
 
 _dev_shell_wrapper_dir=${BASH_SOURCE[0]%/*}

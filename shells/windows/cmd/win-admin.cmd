@@ -1,3 +1,4 @@
+:: win-admin.cmd - Launch an administrative Windows command shell with repo helpers on PATH.
 @echo off
 setlocal
 set WIN_ADMIN_RC=0

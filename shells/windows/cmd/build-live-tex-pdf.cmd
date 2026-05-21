@@ -1,3 +1,4 @@
+:: build-live-tex-pdf.cmd - Build a PDF from a TeX source with latexmk under the TeX Live environment.
 @echo off
 setlocal
 

@@ -1,4 +1,4 @@
-:: mingw64-env.cmd - Basic Windows CLI Env Setup
+:: mingw64-env.cmd - Internal helper that prepares environment variables and PATH entries for MINGW64.
 @echo off
 if not "%SHELL_MINGW64_ENV%0"=="0" exit /b 0
 set SHELL_MINGW64_ENV=1

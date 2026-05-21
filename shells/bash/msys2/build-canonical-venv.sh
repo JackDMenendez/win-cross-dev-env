@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# build-canonical-venv.sh - Rebuild the canonical MSYS Python virtual environment through the shared helper.
+
 set -euo pipefail
 
 _dev_shell_wrapper_dir=${BASH_SOURCE[0]%/*}

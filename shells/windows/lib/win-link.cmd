@@ -1,3 +1,4 @@
+:: win-link.cmd - Create a symbolic link, junction, or hard link with simple Windows help text.
 @echo off
 setlocal
 
@@ -62,13 +63,19 @@ echo   Link:   "%LINK%"
 echo   Target: "%TARGET%"
 echo   Type:   %TYPE%
 echo
-
+if not exist "%TARGET%" (
+    echo Target does not exist: "%TARGET%"
+    goto :EOF
+)
+if exist "%LINK%" (
+    echo Link already exists: "%LINK%"
+    goto :EOF
+)
 mklink %TYPE% "%LINK%" "%TARGET%"
 if errorlevel 1 (
     echo
     echo Failed to create link.
     goto :EOF
 )
-
 echo
 echo Link created successfully.

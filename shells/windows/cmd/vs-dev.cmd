@@ -1,3 +1,4 @@
+:: vs-dev.cmd - Launch a Visual Studio developer command shell on top of the repo baseline.
 @echo off
 setlocal
 prompt (vs-dev)$_$p$g

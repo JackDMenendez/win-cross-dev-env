@@ -1,3 +1,4 @@
+:: win-choco.cmd - Launch a Windows shell oriented around Chocolatey-managed tools and venv activation.
 @echo off
 setlocal
 set WIN_CHOCO_RC=0
