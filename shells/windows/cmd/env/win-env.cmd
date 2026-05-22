@@ -8,6 +8,8 @@ set SHELL_WIN_ENV=1
 call "%~dp0global-env.cmd"
 rem --- Windows Shell Basic Working PATH ---
 set "PATH=%PATH%;%SystemRoot%\System32\WindowsPowerShell\v1.0"
+rem --- Pick up winget and other Windows Store tools ---
+set PATH=%PATH%;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps
 set "PATH=%PATH%;%CHOCOLATEY_PATH%\lib\unxUtils\tools\unxUtils\usr\local\wbin"
 set "PATH=%PATH%;%NEOVIM_PATH%\nvim-win64\bin"
 set "PATH=%PATH%;%VIM_PATH%\vim92"
