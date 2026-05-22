@@ -48,6 +48,9 @@ if exist "virtual-env-requirements.txt" (
     ".venv-win\Scripts\python.exe" -m pip install -r virtual-env-requirements.txt
 )
 
+echo Installing baseline repo tooling
+".venv-win\Scripts\python.exe" -m pip install isort
+
 REM Set PYTHON to the local venv
 set "PYTHON=%CD%\.venv-win\Scripts\python.exe"
 

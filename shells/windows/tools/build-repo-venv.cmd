@@ -74,6 +74,10 @@ if not exist "%REQUIREMENTS_SNAPSHOT%" if exist "%REPO_DIR%\virtual-env-requirem
     if errorlevel 1 goto :cleanup_error
 )
 
+echo Installing baseline repo tooling
+"%TARGET_PYTHON%" -m pip install isort
+if errorlevel 1 goto :cleanup_error
+
 del "%REQUIREMENTS_SNAPSHOT%" >nul 2>&1
 exit /b 0
 

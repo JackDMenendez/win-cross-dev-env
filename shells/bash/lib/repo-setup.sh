@@ -129,6 +129,11 @@ if [ "$SKIP_VENV" != "--no-venv" ]; then
         "$canonical_python" -m venv --system-site-packages "$venv_dir"
     fi
 
+    venv_python="$venv_dir/bin/python"
+    if [ ! -x "$venv_python" ] && [ -x "$venv_dir/Scripts/python.exe" ]; then
+        venv_python="$venv_dir/Scripts/python.exe"
+    fi
+
     # Install requirements if file exists
     if [ -f "virtual-env-requirements.txt" ]; then
         echo "Installing requirements from virtual-env-requirements.txt"
@@ -152,10 +157,13 @@ if [ "$SKIP_VENV" != "--no-venv" ]; then
         else
             requirements_file="virtual-env-requirements.txt"
         fi
-        CC="$CC" CXX="$CXX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" "$venv_dir/bin/python" -m pip install --no-cache-dir -r "$requirements_file"
+        CC="$CC" CXX="$CXX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" "$venv_python" -m pip install --no-cache-dir -r "$requirements_file"
         # Clean up temp file if created
         [ -f "virtual-env-requirements-temp.txt" ] && rm virtual-env-requirements-temp.txt
     fi
+
+    echo "Installing baseline repo tooling"
+    "$venv_python" -m pip install --no-cache-dir isort
 
     PYTHON="$(resolve_python)"
 fi

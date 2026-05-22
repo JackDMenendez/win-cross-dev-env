@@ -141,3 +141,6 @@ elif [ -f "$repo_dir/virtual-env-requirements.txt" ]; then
     echo "Installing requirements from $repo_dir/virtual-env-requirements.txt"
     "$target_python" -m pip install -r "$repo_dir/virtual-env-requirements.txt"
 fi
+
+echo "Installing baseline repo tooling"
+"$target_python" -m pip install isort

@@ -112,10 +112,14 @@ Use the venv maintenance helpers when the underlying subsystem Python has change
 
 - Bash canonical venv: `shells/bash/tools/build-canonical-venv.sh`
 - Bash repo-local venv: `shells/bash/tools/build-repo-venv.sh [repo-dir]`
+- Bash repo-local patch: `shells/bash/tools/patch-repo-venv.sh [repo-dir]`
 - Windows canonical venv: `build-canonical-venv.cmd`
 - Windows repo-local venv: `build-repo-venv.cmd [repo-dir]`
+- Windows repo-local patch: `patch-repo-venv.cmd [repo-dir]`
 
 The repo-local rebuild helpers preserve the packages already installed in the selected repo venv when one exists. If no repo-local venv exists yet, they create the preferred repo-local venv for the current shell and install `virtual-env-requirements.txt` when that file is present.
+
+Use the repo-local patch helpers when a repo venv already exists and only needs the baseline editor tooling refreshed without a full rebuild.
 
 ## Package Manifests
 

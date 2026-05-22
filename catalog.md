@@ -45,6 +45,8 @@ Run `dev-catalog.cmd` from Windows command shells or `dev-catalog.sh` from bash 
 | `nvim-mingw64.cmd` | `shells/windows/cmd/nvim-mingw64.cmd` | Open Neovim after rebuilding a clean MINGW64 environment. |
 | `nvim-msys64.cmd` | `shells/windows/cmd/nvim-msys64.cmd` | Open Neovim after rebuilding a clean MSYS environment. |
 | `nvim-ucrt64.cmd` | `shells/windows/cmd/nvim-ucrt64.cmd` | Open Neovim after rebuilding a clean UCRT64 environment. |
+| `patch-repo-venv.cmd` | `shells/windows/cmd/patch-repo-venv.cmd` | Wrapper that patches a repo-local Windows Python virtual environment. |
+| `patch-repo-venv.cmd` | `shells/windows/tools/patch-repo-venv.cmd` | Install baseline repo tooling into an existing repo-local Windows Python virtual environment. |
 | `python-activate.cmd` | `shells/windows/cmd/lib/python-activate.cmd` | Internal helper that discovers the preferred Windows Python virtual environment. |
 | `repo-setup.cmd` | `shells/windows/lib/repo-setup.cmd` | Clone a repository, prepare VS Code settings, and optionally create a Windows repo venv. |
 | `restore-prompt.cmd` | `shells/windows/cmd/lib/restore-prompt.cmd` | Restore the previous command prompt. |
@@ -93,6 +95,7 @@ Run `dev-catalog.cmd` from Windows command shells or `dev-catalog.sh` from bash 
 | `create-manifest.sh` | `shells/bash/tools/create-manifest.sh` | Generate the package manifest for the current MSYS2 subsystem. |
 | `create-manifest.sh` | `shells/bash/ucrt64/create-manifest.sh` | Generate the UCRT64 package manifest through the shared manifest helper. |
 | `dev-catalog.sh` | `shells/bash/tools/dev-catalog.sh` | Print the generated command catalog from any configured bash shell in the repo. |
+| `patch-repo-venv.sh` | `shells/bash/tools/patch-repo-venv.sh` | Install baseline repo tooling into an existing repo-local Python virtual environment. |
 | `repo-setup.sh` | `shells/bash/lib/repo-setup.sh` | Clone a repository, prepare VS Code settings, and optionally create a subsystem-local repo venv. |
 | `set-active-venv.sh` | `shells/bash/tools/set-active-venv.sh` | Source this helper to activate an explicit, local, or default bash virtual environment. |
 | `setup-vscode.sh` | `shells/bash/tools/setup-vscode.sh` | Write .vscode/settings.json for the current subsystem interpreter and terminal profile. |
