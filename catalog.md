@@ -33,7 +33,8 @@ Run `dev-catalog.cmd` from Windows command shells or `dev-catalog.sh` from bash 
 | `build-repo-venv.cmd` | `shells/windows/tools/build-repo-venv.cmd` | Rebuild a repo-local Windows Python virtual environment and restore packages. |
 | `clang64-env.cmd` | `shells/windows/cmd/env/clang64-env.cmd` | Internal helper that prepares environment variables and PATH entries for CLANG64. |
 | `dev-catalog.cmd` | `shells/windows/cmd/dev-catalog.cmd` | Print the generated command catalog from any default Windows shell in the repo. |
-| `generate-dockerfile.cmd` | `shells/windows/lib/generate-dockerfile.cmd` | Generate a Dockerfile template from the active Python venv with pinned package versions. |
+| `export-vscode-extensions.cmd` | `shells/windows/tools/export-vscode-extensions.cmd` | Export the current VS Code extension manifest to a file for reproducibility. |
+| `generate-dockerfile.cmd` | `shells/windows/lib/generate-dockerfile.cmd` | Generate a Dockerfile template from the discovered Python venv with pinned package versions. |
 | `git-bash-env.cmd` | `shells/windows/cmd/env/git-bash-env.cmd` | Prepare the Windows-side PATH used to start Git Bash. |
 | `global-env.cmd` | `shells/windows/cmd/env/global-env.cmd` | Boot the shared minimal Windows CLI environment. |
 | `global-var.cmd` | `shells/windows/cmd/env/global-var.cmd` | Define repo-root and shared convenience variables. |
@@ -97,7 +98,8 @@ Run `dev-catalog.cmd` from Windows command shells or `dev-catalog.sh` from bash 
 | `create-manifest.sh` | `shells/bash/tools/create-manifest.sh` | Generate the package manifest for the current MSYS2 subsystem. |
 | `create-manifest.sh` | `shells/bash/ucrt64/create-manifest.sh` | Generate the UCRT64 package manifest through the shared manifest helper. |
 | `dev-catalog.sh` | `shells/bash/tools/dev-catalog.sh` | Print the generated command catalog from any configured bash shell in the repo. |
-| `generate-dockerfile.sh` | `shells/bash/lib/generate-dockerfile.sh` | Generate a Dockerfile template from the active Python venv with pinned package versions. |
+| `export-vscode-extensions.sh` | `shells/bash/tools/export-vscode-extensions.sh` | Export the current VS Code extension manifest to a file for reproducibility. |
+| `generate-dockerfile.sh` | `shells/bash/lib/generate-dockerfile.sh` | Generate a Dockerfile template from the active or discovered Python venv with pinned package versions. |
 | `patch-repo-venv.sh` | `shells/bash/tools/patch-repo-venv.sh` | Install baseline repo tooling into an existing repo-local Python virtual environment. |
 | `repo-setup.sh` | `shells/bash/lib/repo-setup.sh` | Clone a repository, prepare VS Code settings, and optionally create a subsystem-local repo venv. |
 | `run-container.sh` | `shells/bash/tools/run-container.sh` | Run a command inside the repo-configured container image. |

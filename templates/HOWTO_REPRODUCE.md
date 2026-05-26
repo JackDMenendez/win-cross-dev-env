@@ -7,6 +7,17 @@ This repository includes a Docker image that freezes the Python environment used
 ### Prerequisites
 - **Docker** or **Podman** installed
 - A copy of this repository
+- (Optional) VS Code with extensions from `.vscode/extensions.txt`
+
+### Setting Up VS Code (Optional)
+
+If `.vscode/extensions.txt` is present, you can reproduce the exact VS Code environment used during development:
+
+```bash
+cat .vscode/extensions.txt | xargs -n 1 code --install-extension
+```
+
+This is optional—the experiments will run in the container regardless of your VS Code setup. Extensions are only needed if you want to browse or edit the source code with the same tools the authors used.
 
 ### Building the Image
 
@@ -44,11 +55,15 @@ If issues persist, contact the authors with your Docker version and OS.
 
 ### Creating the Reproducible Image
 
-The `.dev-shell/` directory contains the configuration for the reproducible environment:
+The `.dev-shell/` directory and `.vscode/` directory contain configuration for the reproducible environment:
 
 - **Dockerfile**: Template for building the reproducible image
 - **requirements.txt**: Pinned package versions from your development environment
 - **container.conf**: Configuration for the dev-shell runners (optional for reviewers)
+
+The `.vscode/extensions.txt` file (if present) documents the VS Code extensions used during development:
+
+- **extensions.txt**: Frozen list of VS Code extensions with versions (optional for reviewers)
 
 ### Workflow
 
@@ -65,6 +80,15 @@ The `.dev-shell/` directory contains the configuration for the reproducible envi
      call shells\windows\lib\generate-dockerfile.cmd .
      ```
    - This creates `.dev-shell/requirements.txt` with all pinned versions
+   - (Optional) Export VS Code extensions if reviewers might want to recreate your editing environment:
+     ```bash
+     bash shells/bash/tools/export-vscode-extensions.sh .
+     ```
+     or on Windows:
+     ```cmd
+     call shells\windows\tools\export-vscode-extensions.cmd .
+     ```
+   - This creates `.vscode/extensions.txt` (not required for running experiments)
 
 3. **Customize the Dockerfile** (if needed):
    - The generated Dockerfile uses `python:3.12-slim` as a base
