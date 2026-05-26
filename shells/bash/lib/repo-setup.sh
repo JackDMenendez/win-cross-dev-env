@@ -30,12 +30,16 @@ resolve_python() {
     suffix=$(venv_suffix)
 
     local candidates=(
+        "$PWD/.venv-$suffix/bin/python.exe"
         "$PWD/.venv-$suffix/bin/python"
         "$PWD/.venv-$suffix/Scripts/python.exe"
+        "$PWD/.venv/bin/python.exe"
         "$PWD/.venv/bin/python"
         "$PWD/.venv/Scripts/python.exe"
+        "$HOME/.venv-$suffix/bin/python.exe"
         "$HOME/.venv-$suffix/bin/python"
         "$HOME/.venv-$suffix/Scripts/python.exe"
+        "$HOME/.venv/bin/python.exe"
         "$HOME/.venv/bin/python"
         "$HOME/.venv/Scripts/python.exe"
     )
@@ -43,7 +47,11 @@ resolve_python() {
     local candidate
     for candidate in "${candidates[@]}"; do
         if [ -x "$candidate" ]; then
-            cygpath -m "$candidate"
+            if [[ "$candidate" == "$PWD/"* ]]; then
+                printf '${workspaceFolder}/%s\n' "${candidate#"$PWD/"}"
+            else
+                cygpath -m "$candidate"
+            fi
             return
         fi
     done

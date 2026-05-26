@@ -1,0 +1,10 @@
+# Repo-local dev-shell container runner configuration.
+# Copy this file to .dev-shell/container.conf in a target repository and adjust the values.
+
+DEV_SHELL_CONTAINER_ENGINE=
+DEV_SHELL_CONTAINER_IMAGE=example-project-dev:latest
+DEV_SHELL_CONTAINER_DOCKERFILE=.dev-shell/Dockerfile
+DEV_SHELL_CONTAINER_WORKDIR=/workspace
+DEV_SHELL_CONTAINER_ENV_PASSTHROUGH=HTTP_PROXY HTTPS_PROXY NO_PROXY
+DEV_SHELL_CONTAINER_CACHE_VOLUMES=pip-cache:/root/.cache/pip
+DEV_SHELL_CONTAINER_EXTRA_ARGS=
