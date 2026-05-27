@@ -78,6 +78,10 @@ Use restrained language. A reasonable claim is:
 
 "The scripts are designed to run on standard Python installations. For Windows users who encounter environment-specific issues, this repository also includes a reproducible shell and virtual-environment workflow used to validate the reported results."
 
+## Known Follow-ups
+
+- `shells/bash/tools/setup-vscode.sh` (and the Windows equivalent) should also patch the target repo's `.gitignore` to add `.vscode/*` + `!.vscode/extensions.txt` -- the directory-ignore + exception pattern needed so the `export-vscode-extensions.sh`-generated snapshot reaches PR contributors via `git clone`. A bare `.vscode/` rule makes children unreachable to `!`-exceptions, which silently defeats step 9 of consumers' v2 release protocol. DCL subprojects (dcl-core, dcl-delta-p-min, dcl-paper-03) have this pattern applied by hand as of 2026-05-26; future repos initialised by `setup-vscode.sh` should inherit it automatically.
+
 ## Note For Future Sessions
 
 Do not assume this repo lives at the root of `C:`.
