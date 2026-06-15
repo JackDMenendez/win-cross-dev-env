@@ -3,10 +3,9 @@
 setlocal
 
 call "%~dp0env\ucrt64-env.cmd"
+call "%~dp0env\vscode-env.cmd"
 
-rem --- Use the users home path ---
-call "%USERPROFILE%\AppData\Local\Programs\Microsoft VS Code\Code.exe" %*
+call  %WCDE_VSCODE_EXE_PATH% %WCDE_VSCODE_DEV_SHELL_ARGS% %*
 set EXITCODE=%ERRORLEVEL%
 
 endlocal & exit /b %EXITCODE%
-

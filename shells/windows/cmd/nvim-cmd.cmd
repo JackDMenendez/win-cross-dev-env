@@ -7,6 +7,9 @@ set SHELL_GLOBAL_VAR=
 set SHELL_WIN_ENV=
 set SHELL_WIN_DEV_ENV=
 
+rem --- Provide a C compiler (gcc) as a fallback for Neovim Treesitter ---
+set "PATH=%PATH%;C:\msys64\ucrt64\bin"
+
 call "%~dp0env\win-dev-env.cmd"
 
 call nvim %*

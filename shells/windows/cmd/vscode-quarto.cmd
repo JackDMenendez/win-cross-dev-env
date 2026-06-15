@@ -33,7 +33,9 @@ if "x%~1"=="x" (
 
 rem --- Load only the lean web-authoring baseline ---
 call "%~dp0env\win-env.cmd"
+call "%~dp0pwsh-env.cmd"
 call "%~dp0env\git-cli-env.cmd"
+call "%~dp0env\R-env.cmd"
 call "%~dp0env\quarto-env.cmd"
 call "%~dp0env\vscode-env.cmd"
 rem --- No MSVC, no pwsh (and its python.exe), no TeX/Sage/Perl ---

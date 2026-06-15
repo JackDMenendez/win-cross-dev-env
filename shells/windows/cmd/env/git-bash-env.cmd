@@ -8,7 +8,7 @@ set SHELL_GIT_BASH_ENV=1
 call "%~dp0global-env.cmd"
 
 rem --- GIT BASH Basic Working PATH ---
-set PATH=%path%;%ProgramFiles%\Git\cmd
+set PATH=%path%;%ProgramFiles%\Git
 if exist "%ProgramFiles%\GitHub CLI\gh.exe" set PATH=%path%;%ProgramFiles%\GitHub CLI
 if exist "%ProgramFiles(x86)%\GitHub CLI\gh.exe" set PATH=%path%;%ProgramFiles(x86)%\GitHub CLI
 if exist "%LOCALAPPDATA%\Programs\GitHub CLI\gh.exe" set PATH=%path%;%LOCALAPPDATA%\Programs\GitHub CLI

@@ -5,7 +5,8 @@ set SHELL_UCRT64_ENV=1
 
 call "%~dp0global-env.cmd"
 call "%~dp0miktex-env.cmd"
-
+:: The vscode coding AI's need access to pwsh
+call "%~dp0pwsh-env.cmd"
 set "DEV_SHELL_SUBSYSTEM=UCRT64"
 set "DEV_SHELL_VENV_SUFFIX=ucrt64"
 set "DEV_SHELL_DEFAULT_VENV="

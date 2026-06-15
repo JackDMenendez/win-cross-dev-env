@@ -1,15 +1,24 @@
 {
     "python.defaultInterpreterPath": "C:/dev/wcde/.venv-win/Scripts/python.exe",
-    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+    "terminal.integrated.defaultProfile.windows": "PowerShell 7",
     "terminal.integrated.profiles.windows": {
-        "Command Prompt": {
-            "path": [
-                "${env:windir}\\Sysnative\\cmd.exe",
-                "${env:windir}\\System32\\cmd.exe"
+        "PowerShell 7": {
+            "source": "PowerShell",
+            "args": [
+                "-NoExit",
+                "-Command",
+                ". 'C:/dev/wcde/shells/windows/PowerShell/profile.ps1'"
+            ]
+        },
+        "Command Prompt (dev)": {
+            "path": "C:\\WINDOWS\\System32\\cmd.exe",
+            "args": [
+                "/k",
+                "C:\\dev\\wcde\\shells\\windows\\cmd\\env\\git-cli-env.cmd"
             ]
         }
     },
-    "files.eol": "crlf",
+    "files.eol": "\r\n",
     "chat.tools.terminal.autoApprove": {
         "rename-item": true
     }

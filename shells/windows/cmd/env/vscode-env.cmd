@@ -6,7 +6,7 @@ if not "%SHELL_VSCODE_ENV%0"=="0" exit /b 0
 set SHELL_VSCODE_ENV=1
 
 REM --- Global variables shared by all environments ---
-set WCDE_VSCODE_DEV_SHELL_ARGS= --verbose
+set WCDE_VSCODE_DEV_SHELL_ARGS=
 set WCDE_VSCODE_COMMAND=Code.exe
 set WCDE_VSCODE_PATH=%LOCALAPPDATA%\Programs\Microsoft VS Code
 set WCDE_VSCODE_EXE_PATH="%LOCALAPPDATA%\Programs\Microsoft VS Code\%WCDE_VSCODE_COMMAND%"
