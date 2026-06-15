@@ -7,6 +7,8 @@ call "%~dp0global-env.cmd"
 call "%~dp0miktex-env.cmd"
 :: The vscode coding AI's need access to pwsh
 call "%~dp0pwsh-env.cmd"
+:: Native-Windows R for Quarto knitr cells (same install as vscode-quarto)
+call "%~dp0R-env.cmd"
 set "DEV_SHELL_SUBSYSTEM=UCRT64"
 set "DEV_SHELL_VENV_SUFFIX=ucrt64"
 set "DEV_SHELL_DEFAULT_VENV="

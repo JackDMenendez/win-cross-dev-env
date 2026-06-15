@@ -21,8 +21,12 @@
 
 # --- git-cli-env.cmd equivalent: Git + GitHub CLI on PATH ----------------
 function Add-GitCliEnv {
-    # Guard clause: mirror SHELL_GIT_CLI_ENV idempotency from the cmd scripts.
-    if ($env:SHELL_GIT_CLI_ENV) { return }
+    # Idempotent by PATH membership, NOT by an early-return on $env:SHELL_GIT_CLI_ENV.
+    # A boolean guard is unsafe because the flag can be inherited as '1' from a
+    # parent that built a *different* PATH (e.g. a cmd launcher); returning early
+    # would then leave Git off this session's PATH. The prepend below strips any
+    # existing entry first and the append checks membership, so re-running is a
+    # no-op. SHELL_GIT_CLI_ENV is still published for external consumers.
     $env:SHELL_GIT_CLI_ENV = '1'
 
     $pf = $env:ProgramFiles
@@ -54,8 +58,12 @@ function Add-GitCliEnv {
 
 # --- R-env.cmd equivalent: R on PATH (needed for Quarto knitr R cells) ---
 function Add-REnv {
-    # Guard clause: mirror SHELL_R_ENV idempotency from the cmd scripts.
-    if ($env:SHELL_R_ENV) { return }
+    # Idempotent by PATH membership, NOT by an early-return on $env:SHELL_R_ENV.
+    # A boolean guard is unsafe because the flag can be inherited as '1' from a
+    # parent that built a different PATH (e.g. ucrt64-env.cmd exports SHELL_R_ENV);
+    # returning early would then leave R off this session's PATH. The R-home
+    # detection is guarded by IsNullOrEmpty and the append checks membership, so
+    # re-running is a no-op. SHELL_R_ENV is still published for external consumers.
     $env:SHELL_R_ENV = '1'
 
     # Honor an externally-provided R home, else auto-detect the newest install

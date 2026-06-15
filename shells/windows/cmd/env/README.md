@@ -77,6 +77,75 @@ set SHELL_GIT_BASH_ENV=1
 
 **When adding new environment scripts:** Always include this guard clause near the top, immediately after `@echo off` and any comments.
 
+### Caveat: boolean guards are unsafe when a parent resets PATH
+
+The boolean guard above prevents the script *body* from running a second time. That
+is correct only when the work it skips is still in effect. It is **not** safe for a
+PATH-adding script whose parent unconditionally rebuilds PATH, because the flag can
+survive a PATH reset:
+
+- `global-env.cmd` sets `PATH=%SystemRoot%\System32;%SystemRoot%` every time it runs.
+- A subsystem script (e.g. `ucrt64-env.cmd`) calls `global-env.cmd` **before** the
+  tool scripts. If a tool's `SHELL_*_ENV` flag was inherited as `1` from the parent
+  process, the reset wipes the tool from PATH and the guard then makes the tool
+  script exit early — so the tool is never re-added. Silent failure.
+
+For PATH-adding scripts, guard by **PATH membership**, not by the boolean flag. Still
+publish the `SHELL_*_ENV` variable for external consumers, but decide whether to add
+the directory by checking PATH directly. See `quarto-env.cmd` and `R-env.cmd`:
+
+```batch
+:: idempotent by PATH membership, NOT by an early-return boolean guard
+set SHELL_R_ENV=1
+set "WCDE_R_BIN_PATH=%WCDE_R_HOME%\bin\x64"
+if not exist "%WCDE_R_BIN_PATH%\R.exe" goto :COMPLETE
+echo %PATH% | findstr /I /C:"%WCDE_R_BIN_PATH%" >nul
+if errorlevel 1 set "PATH=%PATH%;%WCDE_R_BIN_PATH%"
+:COMPLETE
+```
+
+The same rule applies to the PowerShell `profile.ps1`: its `Add-GitCliEnv` and
+`Add-REnv` check membership rather than returning early on `$env:SHELL_*_ENV`.
+
+## Two MSYS2 Runtimes: Git Bash vs. Standalone MSYS2
+
+This machine has **two independent MSYS2 installations**, and the PATH-ordering
+rules in these scripts exist mainly to keep them from colliding.
+
+| | Git for Windows (Git Bash) | Standalone MSYS2 |
+|---|---|---|
+| Location | `C:\Program Files\Git` | `C:\msys64` |
+| Runtime | bundled `msys-2.0.dll` (e.g. 3.6.7) | `pacman`-managed `msys-2.0.dll` (e.g. 3.6.9) |
+| `bash` + coreutils | `Git\usr\bin\` | `msys64\usr\bin\`, `msys64\ucrt64\bin\`, ... |
+| Package manager | none (frozen, ships with Git) | `pacman` |
+
+Git for Windows is *built on* a fork of MSYS2 and bundles its own private copy of the
+runtime and coreutils. It is entirely separate from the `C:\msys64` that `pacman`
+manages, and the two carry **different `msys-2.0.dll` versions**.
+
+**The cardinal rule:** never load two different `msys-2.0.dll` into one process. Mixing
+MSYS-linked binaries across the two installs (e.g. Git's `bash` calling msys64's
+`grep`) produces `cygheap base mismatch detected` errors and `fork` failures.
+
+How the scripts honor that rule:
+
+- **`git.exe` is the safe, Windows-facing launcher.** `git-cli-env.cmd` and
+  `profile.ps1` *prepend* `Git\cmd` so it wins over any MSYS2 `git`. It runs as its
+  own process, so calling it from any shell is safe.
+- **Git's `usr\bin` (bash/coreutils) is the dangerous part.** `git-cli-env.cmd`
+  *appends* `Git\usr\bin` and `Git\mingw64\bin` at the very end so they never shadow
+  MSYS2's coreutils when a subsystem shell runs with `MSYS2_PATH_TYPE=inherit`.
+- **`ucrt64-env.cmd` adds only `Git\cmd`** — never `Git\usr\bin` — so inside a real
+  UCRT64 shell every bash/coreutil comes from `C:\msys64` and no runtime mixing occurs.
+- **Native Windows tools are immune.** R from `C:\Program Files\R` (added by
+  `R-env.cmd`), the Program Files Python, and VS Code are plain Win32 programs that
+  link neither runtime, so they are safe to add to any PATH. (By contrast, the
+  `pacman`-installed `mingw-w64-ucrt-x86_64-r` links the 3.6.9 runtime and works only
+  inside the standalone MSYS2 UCRT64 shell.)
+
+Rule of thumb: **pick one MSYS2 world per shell, and don't put the other's `usr\bin`
+on its PATH.**
+
 ## File Naming Conventions
 
 - **Pattern:** `xxxx-env.cmd` where `xxxx` is lowercase, hyphens separate words, no spaces

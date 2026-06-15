@@ -1,6 +1,13 @@
 :: R-env.cmd - Set up the R environment for Windows development.
 @echo off
-if not "%SHELL_R_ENV%0"=="0" exit /b 0
+
+rem --- NOTE: This script is idempotent by checking PATH membership, NOT by a
+rem     boolean SHELL_R_ENV guard. A boolean guard is unsafe here because
+rem     global-env.cmd unconditionally RESETS PATH; if the guard had already
+rem     tripped (flag inherited as 1, e.g. ucrt64-env.cmd calls global-env
+rem     BEFORE R-env) the R bin would be stranded off PATH. Checking PATH
+rem     directly survives both PATH resets and repeated calls. Same fix as
+rem     quarto-env.cmd. SHELL_R_ENV is still published for external consumers.
 set SHELL_R_ENV=1
 
 rem --- Auto-detect the newest R install (most recently modified R-* dir).
@@ -13,7 +20,17 @@ if not defined WCDE_R_HOME (
 )
 if not defined WCDE_R_HOME set "WCDE_R_HOME=%WCDE_R_ROOT%\R-4.6.0"
 set "WCDE_R_BIN_PATH=%WCDE_R_HOME%\bin\x64"
-rem --- Add R to PATH if it exists ---
-if exist "%WCDE_R_BIN_PATH%\R.exe" set "PATH=%PATH%;%WCDE_R_BIN_PATH%"
+
+rem --- Add R to PATH only if it exists on disk and is not already present, so
+rem     repeat calls don't duplicate it and a PATH reset re-adds it. ---
+if not exist "%WCDE_R_BIN_PATH%\R.exe" goto :COMPLETE
+echo %PATH% | findstr /I /C:"%WCDE_R_BIN_PATH%" >nul
+if errorlevel 1 (
+    set "PATH=%PATH%;%WCDE_R_BIN_PATH%"
+) else (
+    rem R already on PATH; nothing to do.
+)
+
 rem --- Return to caller ---
+:COMPLETE
 exit /b 0
