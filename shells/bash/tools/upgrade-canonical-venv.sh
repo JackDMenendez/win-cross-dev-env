@@ -82,10 +82,12 @@ else
     # then let the venv's own Python parse the names. --local excludes packages
     # inherited from the MSYS2 system site-packages (pacman-managed), so we never
     # try to pip-build something like matplotlib that pacman already provides.
+    # tr -d '\r': the venv python is Windows python.exe and emits CRLF; a trailing
+    # CR on a name would make "pip install --upgrade <name>\r" fail.
     mapfile -t targets < <("$CANONICAL_PYTHON" -m pip list --outdated --local --format=json \
         | "$CANONICAL_PYTHON" -c 'import sys, json
 for pkg in json.load(sys.stdin):
-    print(pkg["name"])')
+    print(pkg["name"])' | tr -d '\r')
 
     if [ "${#targets[@]}" -eq 0 ]; then
         echo "All packages in $CANONICAL_VENV are already up to date."
