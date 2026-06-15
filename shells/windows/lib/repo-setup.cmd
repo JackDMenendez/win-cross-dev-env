@@ -51,25 +51,13 @@ if exist "virtual-env-requirements.txt" (
 echo Installing baseline repo tooling
 ".venv-win\Scripts\python.exe" -m pip install isort
 
-REM Set PYTHON to the local venv
-set "PYTHON=%CD%\.venv-win\Scripts\python.exe"
-
-set "PYTHON_JSON=%PYTHON:\=/%"
-
 :write_settings
 
-mkdir .vscode >nul 2>&1
-
-echo {> .vscode\settings.json
-if /i not "%SKIP_VENV%"=="--no-venv" echo     "python.defaultInterpreterPath": "%PYTHON_JSON%",>> .vscode\settings.json
-echo     "terminal.integrated.defaultProfile.windows": "Command Prompt",>> .vscode\settings.json
-echo     "terminal.integrated.profiles.windows": {>> .vscode\settings.json
-echo         "Command Prompt": {>> .vscode\settings.json
-echo             "path": ["${env:windir}\\Sysnative\\cmd.exe", "${env:windir}\\System32\\cmd.exe"]>> .vscode\settings.json
-echo         }>> .vscode\settings.json
-echo     },>> .vscode\settings.json
-echo     "files.eol": "crlf">> .vscode\settings.json
-echo }>> .vscode\settings.json
+REM Delegate VS Code settings generation to the canonical generator so repos
+REM cloned here get the same "PowerShell 7" + "Command Prompt (dev)" profiles as
+REM setup-vscode.cmd (single source of truth; avoids settings drift). It detects
+REM the repo's .venv-win created above, or falls back to the canonical venv.
+call "%~dp0..\tools\setup-vscode.cmd"
 
 echo Repo initialized for Windows-native environment
 if /i "%SKIP_VENV%"=="--no-venv" echo Virtual environment setup skipped

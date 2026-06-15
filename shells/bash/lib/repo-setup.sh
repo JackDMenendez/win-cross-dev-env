@@ -74,15 +74,23 @@ if [ -n "$SKIP_VENV" ] && [ "$SKIP_VENV" != "--no-venv" ]; then
     exit 1
 fi
 
-# Detect subsystem
+# Detect subsystem -> default terminal profile + C/C++ compiler path.
 case "$MSYSTEM" in
     UCRT64)
         TERMINAL="UCRT64"
-        COMPILER=""
+        COMPILER="\"C_Cpp.default.compilerPath\": \"C:/msys64/ucrt64/bin/g++.exe\","
         ;;
     MINGW64)
         TERMINAL="MINGW64"
         COMPILER="\"C_Cpp.default.compilerPath\": \"C:/msys64/mingw64/bin/g++.exe\","
+        ;;
+    CLANG64)
+        TERMINAL="CLANG64"
+        COMPILER="\"C_Cpp.default.compilerPath\": \"C:/msys64/clang64/bin/clang++.exe\","
+        ;;
+    MSYS)
+        TERMINAL="MSYS"
+        COMPILER="\"C_Cpp.default.compilerPath\": \"C:/msys64/usr/bin/g++.exe\","
         ;;
     *)
         echo "ERROR: Unsupported MSYSTEM: $MSYSTEM"
@@ -106,24 +114,28 @@ if [ "$SKIP_VENV" != "--no-venv" ]; then
             CC="/ucrt64/bin/gcc"
             CXX="/ucrt64/bin/g++"
             PKG_CONFIG_PATH="/ucrt64/tools/pkgconfig:/ucrt64/share/pkgconfig"
+            PACMAN_PREFIX="mingw-w64-ucrt-x86_64-"
             ;;
         MINGW64)
             canonical_python="/mingw64/bin/python"
             CC="/mingw64/bin/gcc"
             CXX="/mingw64/bin/g++"
             PKG_CONFIG_PATH="/mingw64/tools/pkgconfig:/mingw64/share/pkgconfig"
+            PACMAN_PREFIX="mingw-w64-x86_64-"
             ;;
         CLANG64)
             canonical_python="/clang64/bin/python"
             CC="/clang64/bin/clang"
             CXX="/clang64/bin/clang++"
             PKG_CONFIG_PATH="/clang64/tools/pkgconfig:/clang64/share/pkgconfig"
+            PACMAN_PREFIX="mingw-w64-clang-x86_64-"
             ;;
         MSYS)
             canonical_python="/usr/bin/python"
             CC="/usr/bin/gcc"
             CXX="/usr/bin/g++"
             PKG_CONFIG_PATH="/usr/tools/pkgconfig:/usr/share/pkgconfig"
+            PACMAN_PREFIX=""
             ;;
         *)
             echo "ERROR: Unsupported MSYSTEM for canonical python: $MSYSTEM"
@@ -148,13 +160,13 @@ if [ "$SKIP_VENV" != "--no-venv" ]; then
         # For MSYS2 subsystems, install heavy packages via pacman to avoid compilation issues
         pacman_packages=""
         if grep -q "^pandas==" virtual-env-requirements.txt; then
-            pacman_packages="$pacman_packages mingw-w64-ucrt-x86_64-python-pandas"
+            pacman_packages="$pacman_packages ${PACMAN_PREFIX}python-pandas"
         fi
         if grep -q "^scipy==" virtual-env-requirements.txt; then
-            pacman_packages="$pacman_packages mingw-w64-ucrt-x86_64-python-scipy"
+            pacman_packages="$pacman_packages ${PACMAN_PREFIX}python-scipy"
         fi
         if grep -q "^pillow==" virtual-env-requirements.txt; then
-            pacman_packages="$pacman_packages mingw-w64-ucrt-x86_64-python-pillow"
+            pacman_packages="$pacman_packages ${PACMAN_PREFIX}python-pillow"
         fi
         if [ -n "$pacman_packages" ]; then
             echo "Installing packages via pacman: $pacman_packages"
@@ -205,6 +217,24 @@ cat >> .vscode/settings.json <<EOF
             "args": ["--login", "-i"],
             "env": {
                 "MSYSTEM": "MINGW64",
+                "CHERE_INVOKING": "1",
+                "MSYS2_PATH_TYPE": "inherit"
+            }
+        },
+        "CLANG64": {
+            "path": "C:\\\\msys64\\\\usr\\\\bin\\\\bash.exe",
+            "args": ["--login", "-i"],
+            "env": {
+                "MSYSTEM": "CLANG64",
+                "CHERE_INVOKING": "1",
+                "MSYS2_PATH_TYPE": "inherit"
+            }
+        },
+        "MSYS": {
+            "path": "C:\\\\msys64\\\\usr\\\\bin\\\\bash.exe",
+            "args": ["--login", "-i"],
+            "env": {
+                "MSYSTEM": "MSYS",
                 "CHERE_INVOKING": "1",
                 "MSYS2_PATH_TYPE": "inherit"
             }
