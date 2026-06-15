@@ -1,0 +1,14 @@
+# Normalize line endings on commit; check files out per the rules below.
+# Repo purpose is reproducible dev environments, so script line endings are
+# pinned explicitly rather than left to each contributor's core.autocrlf.
+* text=auto
+
+# Unix shell scripts must stay LF. A CRLF shebang breaks under bash:
+#   /usr/bin/env: 'bash\r': No such file or directory
+*.sh    text eol=lf
+*.bash  text eol=lf
+
+# Windows scripts use CRLF (matches files.eol in .vscode/settings.json).
+*.cmd   text eol=crlf
+*.bat   text eol=crlf
+*.ps1   text eol=crlf
