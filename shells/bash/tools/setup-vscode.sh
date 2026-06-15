@@ -60,15 +60,23 @@ resolve_python() {
     exit 1
 }
 
-# Detect subsystem
+# Detect subsystem -> default terminal profile + C/C++ compiler path.
 case "$MSYSTEM" in
     UCRT64)
         TERMINAL="UCRT64"
-        COMPILER=""
+        COMPILER="\"C_Cpp.default.compilerPath\": \"C:/msys64/ucrt64/bin/g++.exe\","
         ;;
     MINGW64)
         TERMINAL="MINGW64"
         COMPILER="\"C_Cpp.default.compilerPath\": \"C:/msys64/mingw64/bin/g++.exe\","
+        ;;
+    CLANG64)
+        TERMINAL="CLANG64"
+        COMPILER="\"C_Cpp.default.compilerPath\": \"C:/msys64/clang64/bin/clang++.exe\","
+        ;;
+    MSYS)
+        TERMINAL="MSYS"
+        COMPILER="\"C_Cpp.default.compilerPath\": \"C:/msys64/usr/bin/g++.exe\","
         ;;
     *)
         echo "Unknown MSYSTEM: $MSYSTEM"
@@ -99,6 +107,24 @@ cat > .vscode/settings.json <<EOF
             "args": ["--login", "-i"],
             "env": {
                 "MSYSTEM": "MINGW64",
+                "CHERE_INVOKING": "1",
+                "MSYS2_PATH_TYPE": "inherit"
+            }
+        },
+        "CLANG64": {
+            "path": "C:\\\\msys64\\\\usr\\\\bin\\\\bash.exe",
+            "args": ["--login", "-i"],
+            "env": {
+                "MSYSTEM": "CLANG64",
+                "CHERE_INVOKING": "1",
+                "MSYS2_PATH_TYPE": "inherit"
+            }
+        },
+        "MSYS": {
+            "path": "C:\\\\msys64\\\\usr\\\\bin\\\\bash.exe",
+            "args": ["--login", "-i"],
+            "env": {
+                "MSYSTEM": "MSYS",
                 "CHERE_INVOKING": "1",
                 "MSYS2_PATH_TYPE": "inherit"
             }
