@@ -14,7 +14,13 @@ if /i "%MSYSTEM%"=="WIN64" (
     exit /b 1
 )
 
-set "CANONICAL_VENV=%USERPROFILE%\.venv-%VENV_SUFFIX%"
+if exist "%USERPROFILE%\.venv-%VENV_SUFFIX%\Scripts\python.exe" (
+    set "CANONICAL_VENV=%USERPROFILE%\.venv-%VENV_SUFFIX%"
+) else if exist "%USERPROFILE%\.venv\Scripts\python.exe" (
+    set "CANONICAL_VENV=%USERPROFILE%\.venv"
+) else (
+    set "CANONICAL_VENV=%USERPROFILE%\.venv-%VENV_SUFFIX%"
+)
 set "CANONICAL_PYTHON=%CANONICAL_VENV%\Scripts\python.exe"
 set "CANONICAL_PACKAGES=%USERPROFILE%\canonical-packages-%VENV_SUFFIX%.txt"
 
