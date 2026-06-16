@@ -1,11 +1,10 @@
 :: win.cmd - Launch the minimal native Windows shell with the shared repo command PATH.
 @echo off
-rem setup a basic windows cmdline environments
-rem This shell provide the nvim editer and basic maintenance
-rem using chocolatey
-rem Some ancient GNU unix-like commands are available. There is
-rem access to the other shells with each one being an isolated
-rem environment.
+rem setup a basic windows cmdline environment
+rem This shell provides the nvim editor and basic maintenance.
+rem The old Chocolatey/unxUtils GNU commands are NO LONGER on PATH; use an
+rem MSYS2 shell (UCRT64/MINGW64/CLANG64) for make/coreutils. There is access
+rem to the other shells, each one being an isolated environment.
 setlocal
 set WIN_RC=0
 rem --- create the (win) prompt

@@ -23,7 +23,6 @@ if not defined NEOVIM_PATH set "NEOVIM_PATH=c:\tools\neovim"
 if not defined VIM_PATH set "VIM_PATH=c:\tools\vim"
 rem Unfortunately, the following variable is a folder that contains python.exe.
 if not defined WCDE_LOCAL_WINDOWS_APPS set "LOCAL_WINDOWS_APPS=%LOCALAPPDATA%\Microsoft\WindowsApps"
-if not defined GNU_PATH set "GNU_PATH=%CHOCOLATEY_PATH%\lib\unxUtils\tools\unxUtils\usr\local\wbin"
 
 rem --- Ensure relocatable path variables are absolute and POSIX-style where possible ---
 if not defined DEV_SHELL_PATH (

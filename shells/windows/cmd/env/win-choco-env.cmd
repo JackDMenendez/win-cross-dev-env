@@ -9,8 +9,7 @@ call "%~dp0win-dev-env.cmd"
 
 rem --- Windows Shell Basic Working PATH ---
 set PATH=%PATH%;%CHOCOLATEY_PATH%\bin
-:: Pick up any tools not covered, like "which"
-set PATH=%path%;C:\tools\gnu\bin
+rem --- C:\tools\gnu\bin (old GNU tools) removed; use MSYS2 for coreutils/make. ---
 set PATH=%PATH%;%DEV_SHELL_WIN_PATH%\cmd
 set PATH=%PATH%;%DEV_SHELL_WIN_PATH%\lib
 

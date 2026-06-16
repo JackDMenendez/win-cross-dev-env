@@ -16,7 +16,8 @@ call "%~dp0git-cli-env.cmd"
 
 rem --- Baseline PATH --- Order matters here
 set PATH=%path%;%ProgramFiles%\doxygen\bin
-set PATH=%path%;%CHOCOLATEY_PATH%\lib\make\tools\install\bin
+rem --- Old Chocolatey GNU Make (3.x) removed. Drive MSVC builds with CMake +
+rem     Ninja, or run make from an MSYS2 shell (GNU Make 4.x). ---
 set PATH=%path%;%ProgramFiles%\CMake\bin
 set PATH=%path%;%ProgramFiles%\Tcl\bin
 
