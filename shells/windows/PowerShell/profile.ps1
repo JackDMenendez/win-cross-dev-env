@@ -10,7 +10,7 @@
 
     Hook it up by dot-sourcing it from your real pwsh profile ($PROFILE):
 
-        . "C:\dev\wcde\shells\windows\PowerShell\profile.ps1"
+        . "J:\dev\wcde\shells\windows\PowerShell\profile.ps1"
 
     or copy/symlink it to one of the $PROFILE paths, e.g.
         $HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
