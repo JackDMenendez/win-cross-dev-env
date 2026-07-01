@@ -23,17 +23,17 @@ if "x%~1"=="x" (
 )
 
 rem --- Load your global baseline environment ---
-call "%~dp0env\win-dev-env.cmd"
-call "%~dp0env\texlive-env.cmd"
-call "%~dp0env\sagemath-env.cmd"
-call "%~dp0env\win-perl-env.cmd"
-call "%~dp0env\vscode-env.cmd"
+call "%~dp0env\requires" global win git-cli miktex sagemath vscode
+if %errorlevel% neq 0 (
+    echo requires returned %errorlevel%
+    exit /b 1
+)
 rem --- No MSYS2 paths added here ---
 rem --- This is a pure Windows environment ---
 rem --- Launch native Windows VS Code ---
 call "%~dp0..\tools\setup-vscode.cmd" %*
-echo call %WCDE_VSCODE_EXE_PATH% %WCDE_VSCODE_DEV_SHELL_ARGS% %*
-call %WCDE_VSCODE_EXE_PATH% %WCDE_VSCODE_DEV_SHELL_ARGS% %*
+echo call "%WCDE_VSCODE_EXE_PATH%" %WCDE_VSCODE_DEV_SHELL_ARGS% %*
+call "%WCDE_VSCODE_EXE_PATH%" %WCDE_VSCODE_DEV_SHELL_ARGS% %*
 set EXITCODE=%ERRORLEVEL%
 
 REM --- Return to caller with the exit code from VS Code ---

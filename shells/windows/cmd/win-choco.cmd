@@ -7,7 +7,11 @@ call "%~dp0lib\python-activate.cmd"
 rem --- Set prompt to indicate Chocolatey Shell ---
 call "%~dp0lib\set-prompt.cmd" admin-choco
 rem --- Load global baseline environment ---
-call "%~dp0env\win-choco-env.cmd"
+call "%~dp0env\requires.cmd" global win-choco
+if %errorlevel% neq 0 (
+    echo Error: %errorlevel% - required dependencies not found. Please ensure that you have the necessary tools installed.
+    exit /b 1
+)
 rem --- No MSYS2, no MinGW, no UCRT64 ---
 rem --- This is a pure Windows shell with Chocolatey ---
 rem --- Launch a native Windows command prompt ---

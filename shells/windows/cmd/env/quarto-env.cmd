@@ -1,6 +1,10 @@
 :: quarto-env.cmd - Add Quarto to the PATH if it is installed in the default location.
 @echo off
-
+if not "%SHELL_QUARTO_ENV%0"=="0" exit /b 0
+set SHELL_QUARTO_ENV=1
+call "%~dp0requires.cmd" global
+if %errorlevel% neq 0 exit /b %errorlevel%
+echo ------------ quarto
 rem --- NOTE: This script is idempotent by checking PATH membership, NOT by a
 rem     boolean SHELL_QUARTO_ENV guard. A boolean guard is unsafe here because
 rem     global-env.cmd unconditionally RESETS PATH; if the guard had already

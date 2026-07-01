@@ -2,7 +2,9 @@
 @echo off
 
 if not "%SHELL_GIT_CLI_ENV%0"=="0" exit /b 0
-
+call "%~dp0requires.cmd" global
+if %errorlevel% neq 0 exit /b %errorlevel%
+echo ------------ git-cli
 set SHELL_GIT_CLI_ENV=1
 
 rem --- Prepend Git-for-Windows git + GitHub CLI so they win over any MSYS2

@@ -4,17 +4,13 @@
 if not "%SHELL_WIN_DEV_ENV%0"=="0" exit /b 0
 
 set SHELL_WIN_DEV_ENV=1
-
-call "%~dp0win-env.cmd"
 rem --- Compiler environment for pip builds (MSVC) ---
 if exist "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvars64.bat" (
     call "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvars64.bat"
 )
-call "%~dp0pwsh-env.cmd"
-call "%~dp0quarto-env.cmd"
-call "%~dp0git-cli-env.cmd"
-
-rem --- Baseline PATH --- Order matters here
+call "%~dp0requires.cmd" global win pwsh quarto git-cli
+if %errorlevel% neq 0 exit /b %errorlevel%
+echo ------------ win-dev
 set PATH=%path%;%ProgramFiles%\doxygen\bin
 rem --- Old Chocolatey GNU Make (3.x) removed. Drive MSVC builds with CMake +
 rem     Ninja, or run make from an MSYS2 shell (GNU Make 4.x). ---

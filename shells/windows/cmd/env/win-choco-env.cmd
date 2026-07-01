@@ -4,10 +4,9 @@ rem Basic Windows CLI Env Setup
 if not "%SHELL_CHOCO_ENV%0"=="0" exit /b 0
 
 set SHELL_CHOCO_ENV=1
-
-call "%~dp0win-dev-env.cmd"
-call "%~dp0ghcup-env.cmd"
-
+call "%~dp0requires.cmd" global win-dev ghcup
+if %errorlevel% neq 0 exit /b %errorlevel%
+echo ------------ win-choco
 rem --- Windows Shell Basic Working PATH ---
 set PATH=%PATH%;%CHOCOLATEY_PATH%\bin
 rem --- C:\tools\gnu\bin (old GNU tools) removed; use MSYS2 for coreutils/make. ---

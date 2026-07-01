@@ -1,15 +1,10 @@
 :: R-env.cmd - Set up the R environment for Windows development.
 @echo off
-
-rem --- NOTE: This script is idempotent by checking PATH membership, NOT by a
-rem     boolean SHELL_R_ENV guard. A boolean guard is unsafe here because
-rem     global-env.cmd unconditionally RESETS PATH; if the guard had already
-rem     tripped (flag inherited as 1, e.g. ucrt64-env.cmd calls global-env
-rem     BEFORE R-env) the R bin would be stranded off PATH. Checking PATH
-rem     directly survives both PATH resets and repeated calls. Same fix as
-rem     quarto-env.cmd. SHELL_R_ENV is still published for external consumers.
+if not "%SHELL_R_ENV%0"=="0" exit /b 0
 set SHELL_R_ENV=1
-
+call "%~dp0requires.cmd" global
+if %errorlevel% neq 0 exit /b %errorlevel%
+echo ------------ R
 rem --- Auto-detect the newest R install (most recently modified R-* dir).
 rem     'dir /od' lists oldest-first, so the loop's final assignment wins =
 rem     newest. Honor a pre-set WCDE_R_HOME; no setlocal (env-script rule),

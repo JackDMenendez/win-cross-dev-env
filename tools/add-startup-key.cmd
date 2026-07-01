@@ -1,0 +1,1 @@
+reg add "HKCU\Software\Microsoft\Command Processor" /v AutoRun /t REG_SZ /d "C:\prod\startup.cmd" /f

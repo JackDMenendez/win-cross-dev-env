@@ -1,9 +1,11 @@
 :: vscode-ghcup.cmd - Launch VS Code with GHCup and Haskell toolchain available.
 @echo off
 setlocal
-
-call "%~dp0env\ghcup-env.cmd"
-call "%~dp0env\vscode-env.cmd"
+call "%~dp0env\requires.cmd" global win ghcup vscode
+if %errorlevel% neq 0 (
+    echo Error: %errorlevel% - required dependencies not found. Please ensure that you have the necessary tools installed.
+    exit /b 1
+)
 
 call %WCDE_VSCODE_EXE_PATH% %WCDE_VSCODE_DEV_SHELL_ARGS% %*
 set EXITCODE=%ERRORLEVEL%

@@ -5,8 +5,9 @@ if not "%SHELL_GIT_BASH_ENV%0"=="0" exit /b 0
 
 set SHELL_GIT_BASH_ENV=1
 
-call "%~dp0global-env.cmd"
-
+call "%~dp0requires.cmd" global
+if %errorlevel% neq 0 exit /b %errorlevel%
+echo ------------ git-bash
 rem --- GIT BASH Basic Working PATH ---
 set PATH=%path%;%ProgramFiles%\Git
 if exist "%ProgramFiles%\GitHub CLI\gh.exe" set PATH=%path%;%ProgramFiles%\GitHub CLI

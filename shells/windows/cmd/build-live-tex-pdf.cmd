@@ -6,11 +6,11 @@ if "%~1"=="" (
     echo Usage: %~nx0 ^<tex-file^> [additional-latexmk-args]
     exit /b 1
 )
-
-call "%~dp0env\global-env.cmd"
-call "%~dp0env\texlive-env.cmd"
-
-set "PATH=C:\Strawberry\perl\bin;C:\Strawberry\c\bin;%PATH%"
+call "%~dp0env\requires.cmd" global msys64 win-dev texlive
+if %errorlevel% neq 0 (
+    echo Error: %errorlevel% - required dependencies not found. Please ensure that you have the necessary tools installed.
+    exit /b 1
+)
 
 where latexmk >nul 2>&1
 if errorlevel 1 (

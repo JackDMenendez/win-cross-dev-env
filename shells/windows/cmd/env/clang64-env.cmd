@@ -2,9 +2,9 @@
 @echo off
 if not "%SHELL_CLANG64_ENV%0"=="0" exit /b 0
 set SHELL_CLANG64_ENV=1
-
-call "%~dp0global-env.cmd"
-
+call "%~dp0requires.cmd" global
+if %errorlevel% neq 0 exit /b %errorlevel%
+echo ------------ clang64
 set "DEV_SHELL_SUBSYSTEM=CLANG64"
 set "DEV_SHELL_VENV_SUFFIX=clang64"
 set "DEV_SHELL_DEFAULT_VENV="

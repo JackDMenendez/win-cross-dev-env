@@ -1,5 +1,8 @@
 :: global-env.cmd - Boot the shared minimal Windows CLI environment.
 @echo off
+if not "%SHELL_GLOBAL_ENV%0"=="0" exit /b 0
+set SHELL_GLOBAL_ENV=1
+echo ------------ global
 :: ---------------------------------------------------------------------------- 
 :: BRIEF: Provide a Global Windows CLI Minimum Environment
 :: PURPOSE: Bootstraps a windows development environment that isolates
@@ -23,6 +26,8 @@ call "%~dp0global-var.cmd"
 set GLOBAL_ENV_RC=%ERRORLEVEL%
 if not "%GLOBAL_ENV_RC%"=="0" exit /b %GLOBAL_ENV_RC%
 rem --- Windows Minimum Path
-set "PATH=%SystemRoot%\System32;%SystemRoot%"
+if not "0%1"=="0--save-path" (
+    set "PATH=%SystemRoot%\System32;%SystemRoot%"
+)
 rem --- Return to caller ---
 exit /b %GLOBAL_ENV_RC%

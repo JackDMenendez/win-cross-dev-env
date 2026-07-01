@@ -3,8 +3,8 @@
 rem Basic Windows CLI Env Setup
 if not "%SHELL_MSYS64_ENV%0"=="0" exit /b 0
 set SHELL_MSYS64_ENV=1
-
-call "%~dp0global-env.cmd"
+call "%~dp0requires.cmd" global
+if %errorlevel% neq 0 exit /b %errorlevel%
 
 set "DEV_SHELL_SUBSYSTEM=MSYS"
 set "DEV_SHELL_VENV_SUFFIX=msys"

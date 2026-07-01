@@ -4,7 +4,9 @@ rem Basic Windows CLI Env Setup
 if not "%SHELL_ADMIN_ENV%0"=="0" exit /b 0
 
 set SHELL_ADMIN_ENV=1
-
+call "%~dp0requires.cmd" global
+if %errorlevel% neq 0 exit /b %errorlevel%
+echo ------------ win-admin
 rem --- Development Shell Path ===
 set "PATH=%PATH%;%DEV_SHELL_WIN_PATH%\cmd"
 set "PATH=%PATH%;%DEV_SHELL_WIN_PATH%\lib"

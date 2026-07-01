@@ -2,9 +2,9 @@
 @echo off
 if not "%SHELL_MINGW64_ENV%0"=="0" exit /b 0
 set SHELL_MINGW64_ENV=1
-
-call "%~dp0global-env.cmd"
-
+call "%~dp0requires.cmd" global
+if %errorlevel% neq 0 exit /b %errorlevel%
+echo ----------- mingw64
 set "DEV_SHELL_SUBSYSTEM=MINGW64"
 set "DEV_SHELL_VENV_SUFFIX=mingw64"
 set "DEV_SHELL_DEFAULT_VENV="

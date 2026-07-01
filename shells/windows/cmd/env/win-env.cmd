@@ -4,8 +4,9 @@ rem Basic Windows CLI Env Setup
 if not "%SHELL_WIN_ENV%0"=="0" exit /b 0
 
 set SHELL_WIN_ENV=1
-
-call "%~dp0global-env.cmd"
+call "%~dp0requires.cmd" global
+echo ------------ win
+if %errorlevel% neq 0 exit /b %errorlevel%
 rem --- Pick up winget and other Windows Store tools ---
 set PATH=%PATH%;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps
 set "PATH=%PATH%;%NEOVIM_PATH%\nvim-win64\bin"

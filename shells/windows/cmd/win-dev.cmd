@@ -13,7 +13,11 @@ call "%~dp0lib\python-activate.cmd"
 
 call "%~dp0lib\set-prompt.cmd" dev
 rem --- Load global baseline environment ---
-call "%~dp0env\win-dev-env.cmd"
+call "%~dp0env\requires.cmd" global win-dev
+if %errorlevel% neq 0 (
+    echo Error: %errorlevel% - required dependencies not found. Please ensure that you have the necessary tools installed.
+    exit /b 1
+)
 rem --- No MSYS2, no MinGW, no UCRT64 ---
 rem --- This is a pure Windows dev shell ---
 rem --- Launch a native Windows command prompt ---

@@ -4,10 +4,9 @@
 if not "%SHELL_PWSH_ENV%0"=="0" exit /b 0
 
 set SHELL_PWSH_ENV=1
-
-rem --- Prerequisite: Load the global environment variables ---
-call "%~dp0global-var.cmd"
-
+call "%~dp0requires.cmd" global
+if %errorlevel% neq 0 exit /b %errorlevel%
+echo ------------ pwsh
 echo Setting up PowerShell environment variables and PATH...
 REM --- Global variables shared by all environments ---
 SET WCDE_POWERSHELL_COMMAND=pwsh.exe

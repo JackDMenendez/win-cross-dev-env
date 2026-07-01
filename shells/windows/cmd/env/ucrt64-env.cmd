@@ -3,12 +3,9 @@
 if not "%SHELL_UCRT64_ENV%0"=="0" exit /b 0
 set SHELL_UCRT64_ENV=1
 
-call "%~dp0global-env.cmd"
-call "%~dp0miktex-env.cmd"
-:: The vscode coding AI's need access to pwsh
-call "%~dp0pwsh-env.cmd"
-:: Native-Windows R for Quarto knitr cells (same install as vscode-quarto)
-call "%~dp0R-env.cmd"
+call "%~dp0requires.cmd" global miktex pwsh R
+if %errorlevel% neq 0 exit /b %errorlevel%
+echo ------------ ucrt64
 set "DEV_SHELL_SUBSYSTEM=UCRT64"
 set "DEV_SHELL_VENV_SUFFIX=ucrt64"
 set "DEV_SHELL_DEFAULT_VENV="

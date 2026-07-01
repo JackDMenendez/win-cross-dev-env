@@ -10,7 +10,7 @@ set WIN_RC=0
 rem --- create the (win) prompt
 call "%~dp0lib\set-prompt.cmd" win
 rem --- Load basic win-shell baseline environment ---
-call "%~dp0env\win-env.cmd"
+call "%~dp0env\requires.cmd" win
 rem --- No MSYS2, no MinGW, no UCRT64 no development ---
 rem --- This is a pure Windows minimal working shell ---
 rem --- Launch a native Windows command prompt ---

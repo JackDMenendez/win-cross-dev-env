@@ -8,7 +8,11 @@ set SHELL_WIN_ENV=
 set SHELL_MSYS64_ENV=
 set SHELL_CLANG64_ENV=
 
-call "%~dp0env\clang64-env.cmd"
+call "%~dp0env\requires.cmd" global clang64
+if %errorlevel% neq 0 (
+    echo Error: %errorlevel% - required dependencies not found. Please ensure that you have the necessary tools installed.
+    exit /b 1
+)
 
 call nvim %*
 set EXITCODE=%ERRORLEVEL%
