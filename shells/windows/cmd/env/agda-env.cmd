@@ -6,7 +6,7 @@ if not "%SHELL_AGDA_ENV%0"=="0" exit /b 0
 set SHELL_AGDA_ENV=1
 call "%~dp0requires.cmd" global ghcup
 if %errorlevel% neq 0 exit /b %errorlevel%
-eche ------------ agda
+echo ------------ agda
 rem --- Add Agda to the PATH ---
 if exist "%GHCUP_INSTALL_BASE_PREFIX%\bin" (
     echo Adding Agda to PATH from %GHCUP_INSTALL_BASE_PREFIX%\bin
