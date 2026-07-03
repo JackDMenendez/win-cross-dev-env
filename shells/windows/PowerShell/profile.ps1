@@ -99,7 +99,7 @@ function Get-PreferredVenv {
         (Join-Path $PWD '.venv_win64'),
         (Join-Path $PWD '.venv'),
         $env:DEV_SHELL_DEFAULT_VENV,
-        (Join-Path $env:USERPROFILE '.venv')
+        (Join-Path $env:USERPROFILE '.venv-win')
     )
 
     foreach ($venv in $candidates) {

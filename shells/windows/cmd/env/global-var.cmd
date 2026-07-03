@@ -37,7 +37,7 @@ if not defined DEV_SHELL_POSIX_PATH (
 set DEV_SHELL_WIN_PATH=%DEV_SHELL_PATH%\shells\windows
 set DEV_SHELL=%DEV_SHELL_PATH%
 
-set CANONICAL_WIN_VENV=%USERPROFILE%\.venv
+set CANONICAL_WIN_VENV=%USERPROFILE%\.venv-win
 set CANONICAL_WIN_PYTHON=%CANONICAL_WIN_VENV%\Scripts\python.exe
 set CANONICAL_WIN_SCRIPTS=%CANONICAL_WIN_VENV%\Scripts
 echo Canonical Windows virtual environment path set to: %CANONICAL_WIN_VENV%

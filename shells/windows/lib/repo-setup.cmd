@@ -45,7 +45,19 @@ if not exist ".venv-win" (
 REM Install requirements if file exists
 if exist "virtual-env-requirements.txt" (
     echo Installing requirements from virtual-env-requirements.txt
-    ".venv-win\Scripts\python.exe" -m pip install -r virtual-env-requirements.txt
+    REM CuPy needs the CUDA-toolkit wheels [ctk] to actually run, and must come
+    REM from binaries only -- a bare 'cupy' sdist triggers a runaway source build.
+    REM Install it via the known-good recipe and keep it out of the generic pip run.
+    findstr /i /r /c:"^ *cupy" virtual-env-requirements.txt >nul 2>&1
+    if not errorlevel 1 (
+        echo Detected cupy requirement - installing cupy-cuda12x[ctk] binary-only
+        ".venv-win\Scripts\python.exe" -m pip install --only-binary=:all: "cupy-cuda12x[ctk]"
+        findstr /i /v /r /c:"^ *cupy" virtual-env-requirements.txt > virtual-env-requirements-temp.txt
+        ".venv-win\Scripts\python.exe" -m pip install -r virtual-env-requirements-temp.txt
+        del virtual-env-requirements-temp.txt
+    ) else (
+        ".venv-win\Scripts\python.exe" -m pip install -r virtual-env-requirements.txt
+    )
 )
 
 echo Installing baseline repo tooling

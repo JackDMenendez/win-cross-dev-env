@@ -157,29 +157,49 @@ if [ "$SKIP_VENV" != "--no-venv" ]; then
     # Install requirements if file exists
     if [ -f "virtual-env-requirements.txt" ]; then
         echo "Installing requirements from virtual-env-requirements.txt"
+
+        # GPU guard: CuPy is native-Windows-only in this environment. There is no
+        # wheel for the MSYS2 platform tag (mingw_x86_64_ucrt_gnu) and no pacman
+        # package, so pip falls back to building the sdist -- a runaway parallel
+        # NVCC/C++ compile that spawns thousands of processes and exhausts system
+        # RAM. Never let that happen here: strip cupy from the requirements and
+        # point the user at the canonical Windows venv (.venv-win, via vscode-ps.cmd).
+        if grep -qiE "^[[:space:]]*cupy" virtual-env-requirements.txt; then
+            echo "############################################################"
+            echo "# SKIPPING cupy: not buildable under $MSYSTEM (would exhaust RAM)."
+            echo "# Use the canonical Windows venv (.venv-win) via vscode-ps.cmd for GPU work."
+            echo "############################################################"
+        fi
+
+        # Working copy with cupy stripped (see guard above); heavy packages are
+        # further removed below when installed via pacman instead of compiling.
+        grep -viE "^[[:space:]]*cupy" virtual-env-requirements.txt > virtual-env-requirements-temp.txt || true
+
         # For MSYS2 subsystems, install heavy packages via pacman to avoid compilation issues
         pacman_packages=""
-        if grep -q "^pandas==" virtual-env-requirements.txt; then
+        if grep -q "^pandas==" virtual-env-requirements-temp.txt; then
             pacman_packages="$pacman_packages ${PACMAN_PREFIX}python-pandas"
         fi
-        if grep -q "^scipy==" virtual-env-requirements.txt; then
+        if grep -q "^scipy==" virtual-env-requirements-temp.txt; then
             pacman_packages="$pacman_packages ${PACMAN_PREFIX}python-scipy"
         fi
-        if grep -q "^pillow==" virtual-env-requirements.txt; then
+        if grep -q "^pillow==" virtual-env-requirements-temp.txt; then
             pacman_packages="$pacman_packages ${PACMAN_PREFIX}python-pillow"
         fi
         if [ -n "$pacman_packages" ]; then
             echo "Installing packages via pacman: $pacman_packages"
             pacman -S --noconfirm $pacman_packages || echo "Some packages not available via pacman, proceeding with pip"
-            # Create a temporary requirements file without the pacman-installed packages
-            grep -v "^pandas==" virtual-env-requirements.txt | grep -v "^scipy==" | grep -v "^pillow==" > virtual-env-requirements-temp.txt
-            requirements_file="virtual-env-requirements-temp.txt"
-        else
-            requirements_file="virtual-env-requirements.txt"
+            # Drop the pacman-installed packages from the pip requirements too.
+            grep -v "^pandas==" virtual-env-requirements-temp.txt | grep -v "^scipy==" | grep -v "^pillow==" > virtual-env-requirements-temp2.txt || true
+            mv virtual-env-requirements-temp2.txt virtual-env-requirements-temp.txt
         fi
-        CC="$CC" CXX="$CXX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" "$venv_python" -m pip install --no-cache-dir -r "$requirements_file"
-        # Clean up temp file if created
-        [ -f "virtual-env-requirements-temp.txt" ] && rm virtual-env-requirements-temp.txt
+
+        # --only-binary on cupy is a backstop: even a transitive cupy dependency
+        # fails fast instead of triggering the runaway source build.
+        CC="$CC" CXX="$CXX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" "$venv_python" -m pip install --no-cache-dir \
+            --only-binary=cupy,cupy-cuda11x,cupy-cuda12x \
+            -r virtual-env-requirements-temp.txt
+        rm -f virtual-env-requirements-temp.txt
     fi
 
     echo "Installing baseline repo tooling"
