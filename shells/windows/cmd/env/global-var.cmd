@@ -24,7 +24,14 @@ if not defined VIM_PATH set "VIM_PATH=c:\tools\vim"
 rem Unfortunately, the following variable is a folder that contains python.exe.
 if not defined WCDE_LOCAL_WINDOWS_APPS set "LOCAL_WINDOWS_APPS=%LOCALAPPDATA%\Microsoft\WindowsApps"
 
-rem --- Ensure relocatable path variables are absolute and POSIX-style where possible ---
+rem --- DEV/PROD level selection -------------------------------------------
+rem   WCDELEVEL chooses which wcde install this session targets, so a launcher
+rem   writes .vscode settings (profile.ps1, git-cli-env) pointing at that level:
+rem     DEV  -> j:\dev\wcde        PROD -> c:\prod\wcde
+rem   Unset: fall back to THIS copy's own root (self-location; prior behavior).
+rem   An already-defined DEV_SHELL_PATH (inherited) always wins.
+if not defined DEV_SHELL_PATH if /i "%WCDELEVEL%"=="DEV"  if exist "j:\dev\wcde\shells\windows"  set "DEV_SHELL_PATH=j:\dev\wcde"
+if not defined DEV_SHELL_PATH if /i "%WCDELEVEL%"=="PROD" if exist "c:\prod\wcde\shells\windows" set "DEV_SHELL_PATH=c:\prod\wcde"
 if not defined DEV_SHELL_PATH (
 	for %%I in ("%~dp0..\..\..\..") do set "DEV_SHELL_PATH=%%~fI"
 )
