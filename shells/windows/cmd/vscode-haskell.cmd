@@ -1,0 +1,42 @@
+:: vscode-ps.cmd - Launch VS Code from the native Windows development environment intended for PowerShell use.
+@echo off
+echo Launching VS Code from the native Windows development environment (PowerShell-oriented)...
+echo Parameters passed to this script: %*
+rem --- Whatever happens here, stays here. We want to avoid any side effects on the caller's environment, so we use setlocal and endlocal to contain all changes within this script.
+
+setlocal enabledelayedexpansion
+
+Set EXITCODE=0
+Set TARGET=
+
+if "x%~1"=="x" (
+    echo No target directory provided. Using current directory: %CD%
+    set "TARGET=%CD%"
+) else (
+    set "TARGET=%~f1"
+    echo param %~1 Target directory provided: %TARGET%
+    if not exist !TARGET! (
+        echo Error: Target directory not found: %TARGET%
+        set EXITCODE=1
+        goto COMPLETE
+    )
+)
+
+rem --- Load your global baseline environment ---
+call "%~dp0env\requires" global win git-cli miktex sagemath haskell vscode
+if %errorlevel% neq 0 (
+    echo requires returned %errorlevel%
+    exit /b 1
+)
+rem --- No MSYS2 paths added here ---
+rem --- This is a pure Windows environment ---
+rem --- Launch native Windows VS Code ---
+call "%~dp0..\tools\setup-vscode.cmd" %*
+echo call "%WCDE_VSCODE_EXE_PATH%" %WCDE_VSCODE_DEV_SHELL_ARGS% %*
+call "%WCDE_VSCODE_EXE_PATH%" %WCDE_VSCODE_DEV_SHELL_ARGS% %*
+set EXITCODE=%ERRORLEVEL%
+
+REM --- Return to caller with the exit code from VS Code ---
+:COMPLETE
+endlocal & exit /b %EXITCODE%
+
