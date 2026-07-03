@@ -23,13 +23,15 @@ if "x%~1"=="x" (
 )
 
 rem --- Load your global baseline environment ---
-call "%~dp0env\requires" global win git-cli miktex sagemath vscode
+rem     msys2-tools is last so C:\msys64\ucrt64\bin + C:\msys64\usr\bin are
+rem     APPENDED to PATH (native Windows keeps precedence; ucrt64 toolchain is
+rem     still reachable for gcc/make/pkg-config etc.).
+call "%~dp0env\requires" global win git-cli miktex sagemath vscode msys2-tools
 if %errorlevel% neq 0 (
     echo requires returned %errorlevel%
     exit /b 1
 )
-rem --- No MSYS2 paths added here ---
-rem --- This is a pure Windows environment ---
+rem --- Native Windows environment; ucrt64/usr bin appended via msys2-tools ---
 rem --- Launch native Windows VS Code ---
 call "%~dp0..\tools\setup-vscode.cmd" %*
 echo call "%WCDE_VSCODE_EXE_PATH%" %WCDE_VSCODE_DEV_SHELL_ARGS% %*
