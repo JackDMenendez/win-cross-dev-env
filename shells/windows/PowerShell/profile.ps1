@@ -90,6 +90,21 @@ function Add-REnv {
     }
 }
 
+# --- quarto-env.cmd equivalent: Quarto on PATH (render/preview the site) --
+function Add-QuartoEnv {
+    # Idempotent by PATH membership, matching env\quarto-env.cmd (which notes a
+    # boolean guard is unsafe because global-env unconditionally resets PATH;
+    # a tripped flag would strand the Quarto bin off PATH). SHELL_QUARTO_ENV is
+    # published for external consumers only.
+    $env:SHELL_QUARTO_ENV = '1'
+    $env:WCDE_QUARTO_BIN = Join-Path $env:ProgramFiles 'Quarto\bin'
+    $exe = Join-Path $env:WCDE_QUARTO_BIN 'quarto.exe'
+    if ((Test-Path -LiteralPath $exe) -and
+        (";$env:PATH;" -notlike "*;$env:WCDE_QUARTO_BIN;*")) {
+        $env:PATH = "$env:PATH;$env:WCDE_QUARTO_BIN"
+    }
+}
+
 # --- python-activate.cmd equivalent: find + activate the venv ------------
 function Get-PreferredVenv {
     # Same precedence as cmd\lib\python-activate.cmd, but resolving the
@@ -113,6 +128,11 @@ function Get-PreferredVenv {
 }
 
 function Enable-PreferredVenv {
+    if ($env:WCDE_INCLUDE_PYTHON_VENV -ne '1') {
+        Write-Host '[profile] Python virtual environment not requested; skipping activation.'
+        return
+    }
+
     # Don't stomp an already-active environment (idempotent / nested-safe).
     if ($env:VIRTUAL_ENV) {
         Write-Host "[profile] Virtual environment already active: $env:VIRTUAL_ENV"
@@ -132,4 +152,5 @@ function Enable-PreferredVenv {
 # --- Run on profile load -------------------------------------------------
 Add-GitCliEnv
 Add-REnv
+Add-QuartoEnv
 Enable-PreferredVenv

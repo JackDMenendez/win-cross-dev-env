@@ -8,8 +8,6 @@ set "DEV_SHELL_DEFAULT_VENV=%USERPROFILE%\.venv-win"
 set "DEV_SHELL_VENV_SUFFIX=win"
 set "DEV_SHELL_ACTIVE_VENV_KIND="
 set "DEV_SHELL_ACTIVE_VENV_PATH="
-rem --- Load Python venv activation logic, which sets DEV_SHELL_ACTIVE_VENV_* variables ---
-call "%~dp0lib\python-activate.cmd"
 
 call "%~dp0lib\set-prompt.cmd" dev
 rem --- Load global baseline environment ---
