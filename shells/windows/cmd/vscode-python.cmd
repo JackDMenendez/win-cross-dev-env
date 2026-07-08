@@ -1,4 +1,4 @@
-:: vscode-ps.cmd - Launch VS Code from the native Windows development environment intended for PowerShell use.
+:: vscode-python.cmd - Bring up a pure python environment
 @echo off
 echo Launching VS Code from the native Windows development environment (PowerShell-oriented)...
 echo Parameters passed to this script: %*
@@ -26,14 +26,14 @@ rem --- Load your global baseline environment ---
 rem     msys2-tools is last so C:\msys64\ucrt64\bin + C:\msys64\usr\bin are
 rem     APPENDED to PATH (native Windows keeps precedence; ucrt64 toolchain is
 rem     still reachable for gcc/make/pkg-config etc.).
-call "%~dp0env\requires" global win git-cli miktex sagemath vscode msys2-tools
+call "%~dp0env\requires" global win git-cli python vscode msys2-tools
 if %errorlevel% neq 0 (
     echo requires returned %errorlevel%
     exit /b 1
 )
 rem --- Native Windows environment; ucrt64/usr bin appended via msys2-tools ---
 rem --- Isolate this flavor: own user-data + extensions dir (see lib\vsprofiles) ---
-set "WCDE_VSCODE_PROFILE=ps"
+set "WCDE_VSCODE_PROFILE=python"
 call "%~dp0..\tools\vscode-isolation.cmd" "%~1"
 rem --- Launch native Windows VS Code ---
 call "%~dp0..\tools\setup-vscode.cmd" %*
@@ -44,4 +44,3 @@ set EXITCODE=%ERRORLEVEL%
 REM --- Return to caller with the exit code from VS Code ---
 :COMPLETE
 endlocal & exit /b %EXITCODE%
-

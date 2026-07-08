@@ -1,14 +1,15 @@
-:: vscode-mingw64.cmd - Launch VS Code from a MINGW64-oriented shell plus TeX, SageMath, and Perl tools.
+:: vscode-mingw64.cmd - Launch VS Code from a MINGW64-oriented shell.
 @echo off
 setlocal
-call "%~dp0env\requires.cmd" global win-dev mingw64 texlive sagemath vscode
+call "%~dp0env\requires.cmd" global win-dev mingw64 vscode
 if %errorlevel% neq 0 (
     echo Error: %errorlevel% - required dependencies not found. Please ensure that you have the necessary tools installed.
     exit /b 1
 )
 
-rem --- Use the users home path ---
-call "%USERPROFILE%\AppData\Local\Programs\Microsoft VS Code\Code.exe" %*
+set "WCDE_VSCODE_PROFILE=mingw64"
+call "%~dp0..\tools\vscode-isolation.cmd" "%~1"
+call "%WCDE_VSCODE_EXE_PATH%" %WCDE_VSCODE_DEV_SHELL_ARGS% %*
 set EXITCODE=%ERRORLEVEL%
 
 endlocal & exit /b %EXITCODE%

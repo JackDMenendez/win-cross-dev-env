@@ -1,0 +1,5 @@
+# sage.txt - vscode-sagemath profile (SageMath / Python maths).
+# common.txt is installed too; list only profile-specific extras here.
+
+ms-python.python
+ms-toolsai.jupyter

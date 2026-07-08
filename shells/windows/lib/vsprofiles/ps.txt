@@ -1,0 +1,8 @@
+# ps.txt - vscode-ps / vscode-cmd profile (full native Windows kitchen-sink).
+# common.txt is installed too. This profile is meant to carry your whole
+# working set, so seed it from your CURRENT default VS Code install:
+#     shells\windows\tools\seed-profile.cmd ps
+# which runs `code --list-extensions` and rewrites this file. Until seeded,
+# only the ids below (plus common.txt) are installed.
+
+ms-vscode.cpptools

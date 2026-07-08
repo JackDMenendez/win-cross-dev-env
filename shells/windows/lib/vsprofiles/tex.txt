@@ -1,0 +1,4 @@
+# tex.txt - vscode-miktex profile (LaTeX authoring).
+# common.txt is installed too; list only profile-specific extras here.
+
+james-yu.latex-workshop

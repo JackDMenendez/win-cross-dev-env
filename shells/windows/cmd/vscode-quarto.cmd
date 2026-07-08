@@ -32,9 +32,12 @@ if "x%~1"=="x" (
 )
 
 rem --- Load only the lean web-authoring baseline ---
-call "%~dp0env\requires.cmd" global win-dev git-cli R quarto vscode
+call "%~dp0env\requires.cmd" global git-cli quarto vscode
 rem --- No MSVC, no pwsh (and its python.exe), no TeX/Sage/Perl ---
 rem --- Python, if the site executes code cells, comes from the project venv ---
+rem --- Isolate this flavor: own user-data + extensions dir (see lib\vsprofiles) ---
+set "WCDE_VSCODE_PROFILE=web"
+call "%~dp0..\tools\vscode-isolation.cmd" "%~1"
 rem --- Launch native Windows VS Code ---
 call "%~dp0..\tools\setup-vscode.cmd" %*
 echo call "%WCDE_VSCODE_EXE_PATH%" %WCDE_VSCODE_DEV_SHELL_ARGS% %*

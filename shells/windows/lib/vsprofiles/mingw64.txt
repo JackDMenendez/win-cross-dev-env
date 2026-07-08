@@ -1,0 +1,5 @@
+# mingw64.txt - vscode-mingw64 profile (MINGW64 C/C++ toolchain plus TeX/Sage).
+# common.txt is installed too; list only profile-specific extras here.
+
+ms-vscode.cpptools
+ms-vscode.cmake-tools

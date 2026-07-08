@@ -12,7 +12,8 @@ if "%~f1"=="" (
     set "TARGET=%~f1"
     echo Target directory is: %TARGET%
 )
-
+rem do we have python env?
+if "%WCDE_INCLUDE_PYTHON_VENV%0" == "0" goto :setup_vscode_skip_venv
 rem --- Prefer a native Windows-layout venv (Scripts\python.exe). A UCRT64/MSYS2
 rem     venv uses bin\ and is intentionally ignored here. Set PYTHON in EVERY
 rem     branch so the interpreter path is never left empty.
@@ -31,6 +32,7 @@ if exist "%TARGET%\.venv-win\Scripts\python.exe" (
 )
 
 set "PYTHON_JSON=%PYTHON:\=/%"
+:setup_vscode_skip_venv
 
 rem --- Terminal profile bootstrap paths (PowerShell git+venv, cmd git) ---
 rem     PowerShell dot-sources profile.ps1 -> forward slashes are fine.
@@ -52,7 +54,9 @@ if not exist "%TARGET%\.vscode" (
 )
 
 echo {> "%TARGET%\.vscode\settings.json"
-echo     "python.defaultInterpreterPath": "%PYTHON_JSON%",>> "%TARGET%\.vscode\settings.json"
+if defined WCDE_INCLUDE_PYTHON_VENV (
+    echo     "python.defaultInterpreterPath": "%PYTHON_JSON%",>> "%TARGET%\.vscode\settings.json"
+)
 echo     "terminal.integrated.defaultProfile.windows": "PowerShell 7",>> "%TARGET%\.vscode\settings.json"
 echo     "terminal.integrated.profiles.windows": {>> "%TARGET%\.vscode\settings.json"
 echo         "PowerShell 7": {>> "%TARGET%\.vscode\settings.json"
@@ -74,8 +78,23 @@ echo     },>> "%TARGET%\.vscode\settings.json"
 echo     "files.eol": "\r\n",>> "%TARGET%\.vscode\settings.json"
 echo     "chat.tools.terminal.autoApprove": {>> "%TARGET%\.vscode\settings.json"
 echo         "rename-item": true>> "%TARGET%\.vscode\settings.json"
-echo     }>> "%TARGET%\.vscode\settings.json"
+echo     },>> "%TARGET%\.vscode\settings.json"
+::       added autosave preference.
+echo     "files.autoSaveDelay": 5000,>> "%TARGET%\.vscode\settings.json"
+echo     "files.autoSave": "afterDelay",>> "%TARGET%\.vscode\settings.json"
+echo     "vim.easymotion": true,>> "%TARGET%\.vscode\settings.json"
+echo     "vim.incsearch": true,>> "%TARGET%\.vscode\settings.json"
+echo     "vim.useSystemClipboard": true,>> "%TARGET%\.vscode\settings.json"
+echo     "vim.useCtrlKeys": true,>> "%TARGET%\.vscode\settings.json"
+echo     "vim.hlsearch": true,>> "%TARGET%\.vscode\settings.json"
+echo     "vim.leader": "<space>",>> "%TARGET%\.vscode\settings.json"
+echo     "vim.handleKeys": {>> "%TARGET%\.vscode\settings.json"
+echo        "<C-a>": false,>> "%TARGET%\.vscode\settings.json"
+echo        "<C-f>": false,>> "%TARGET%\.vscode\settings.json"
+echo        "<C-v>": false,>> "%TARGET%\.vscode\settings.json"
+echo        "<C-x>": false>> "%TARGET%\.vscode\settings.json"
+echo     },>> "%TARGET%\.vscode\settings.json"
 echo }>> "%TARGET%\.vscode\settings.json"
-echo VS Code settings created for Windows-native environment at "%TARGET%\.vscode\settings.json"
+echo  Windows-native vscode environment
 cat "%TARGET%\.vscode\settings.json"
 endlocal

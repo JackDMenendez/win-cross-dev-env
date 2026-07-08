@@ -1,0 +1,6 @@
+# web.txt - vscode-quarto profile (lean Quarto / Markdown authoring).
+# common.txt is installed too (Vim, GitLens, Claude Code, EditorConfig);
+# list only web-specific extras here. R was intentionally dropped from this
+# flavor's requires, so no R extensions here.
+
+quarto.quarto

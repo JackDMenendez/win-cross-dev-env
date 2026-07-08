@@ -7,7 +7,9 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
-call "%USERPROFILE%\AppData\Local\Programs\Microsoft VS Code\Code.exe" %*
+set "WCDE_VSCODE_PROFILE=tex"
+call "%~dp0..\tools\vscode-isolation.cmd" "%~1"
+call "%WCDE_VSCODE_EXE_PATH%" %WCDE_VSCODE_DEV_SHELL_ARGS% %*
 set EXITCODE=%ERRORLEVEL%
 
 endlocal & exit /b %EXITCODE%

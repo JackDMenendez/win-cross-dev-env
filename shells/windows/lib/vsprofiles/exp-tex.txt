@@ -1,0 +1,7 @@
+# exp-tex.txt - vscode-exp-tex profile (experimental python + LaTeX authoring).
+# common.txt is installed too; list only profile-specific extras here.
+# This flavor adds MiKTeX to PATH (laytex-env.cmd) on top of the python venv.
+
+ms-python.python
+ms-toolsai.jupyter
+james-yu.latex-workshop

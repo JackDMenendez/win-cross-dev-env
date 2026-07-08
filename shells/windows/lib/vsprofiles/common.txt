@@ -1,0 +1,10 @@
+# common.txt - extensions installed into EVERY isolation profile.
+# One VS Code extension id per line; blank lines and #-comments are ignored.
+# VS Code cannot share a live extensions dir between profiles, so "common"
+# means "installed into each profile's ext dir" - this list is the mechanism.
+# Verify ids against `code --list-extensions` before trusting them.
+
+vscodevim.vim
+eamodio.gitlens
+anthropic.claude-code
+editorconfig.editorconfig

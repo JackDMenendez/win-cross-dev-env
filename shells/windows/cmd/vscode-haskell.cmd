@@ -1,4 +1,4 @@
-:: vscode-ps.cmd - Launch VS Code from the native Windows development environment intended for PowerShell use.
+:: vscode-haskell.cmd - Launch VS Code from a Haskell (GHCup) development environment.
 @echo off
 echo Launching VS Code from the native Windows development environment (PowerShell-oriented)...
 echo Parameters passed to this script: %*
@@ -23,13 +23,16 @@ if "x%~1"=="x" (
 )
 
 rem --- Load your global baseline environment ---
-call "%~dp0env\requires" global win git-cli miktex sagemath haskell vscode
+call "%~dp0env\requires" global win git-cli haskell vscode
 if %errorlevel% neq 0 (
     echo requires returned %errorlevel%
     exit /b 1
 )
 rem --- No MSYS2 paths added here ---
 rem --- This is a pure Windows environment ---
+rem --- Isolate this flavor: own user-data + extensions dir (see lib\vsprofiles) ---
+set "WCDE_VSCODE_PROFILE=haskell"
+call "%~dp0..\tools\vscode-isolation.cmd" "%~1"
 rem --- Launch native Windows VS Code ---
 call "%~dp0..\tools\setup-vscode.cmd" %*
 echo call "%WCDE_VSCODE_EXE_PATH%" %WCDE_VSCODE_DEV_SHELL_ARGS% %*

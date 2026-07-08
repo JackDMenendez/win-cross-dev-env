@@ -1,0 +1,5 @@
+# python.txt - vscode-python profile (pure native Windows Python + Jupyter).
+# common.txt is installed too; list only profile-specific extras here.
+
+ms-python.python
+ms-toolsai.jupyter

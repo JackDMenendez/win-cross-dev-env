@@ -1,0 +1,5 @@
+# haskell.txt - vscode-haskell / vscode-ghcup profile (GHC toolchain).
+# common.txt is installed too; list only Haskell-specific extras here.
+
+haskell.haskell
+justusadam.language-haskell
