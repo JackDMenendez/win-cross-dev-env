@@ -44,8 +44,10 @@ call :seed_user_settings
 call :provision
 
 rem --- --sync off forces VS Code Settings Sync OFF on every isolated launch, so a
-rem     stray sign-in can't refill a profile's ext dir with the full synced set. ---
-set "WCDE_VSCODE_DEV_SHELL_ARGS=--sync off --user-data-dir "%_VSISO_DATA%" --extensions-dir "%_VSISO_EXT%""
+rem     stray sign-in can't refill a profile's ext dir with the full synced set.
+rem     --new-window forces each profile to open in its own isolated instance,
+rem     preventing profile collapse when switching between flavors. ---
+set "WCDE_VSCODE_DEV_SHELL_ARGS=--sync off --new-window --no-sandbox --user-data-dir "%_VSISO_DATA%" --extensions-dir "%_VSISO_EXT%""
 echo [vscode-isolation] args: %WCDE_VSCODE_DEV_SHELL_ARGS%
 
 rem --- leave WCDE_VSCODE_DEV_SHELL_ARGS set; drop the scratch vars ---

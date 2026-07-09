@@ -2,6 +2,15 @@
     "update.mode": "manual",
     "update.enableWindowsBackgroundUpdates": false,
     "extensions.autoUpdate": false,
+    "extensions.ignoreRecommendations": true,
+    "settingsSync.enabled": false,
+    "settingsSync.keybindingsPerPlatform": false,
+    "settingsSync.ignoredSettings": ["extensions"],
+    "settingsSync.enableBackupSettings": false,
+    "window.newWindowProfile": "",
+    "window.restoreWindows": "none",
+    "github.gitProtocol": "ssh",
+    "security.restrictUNCAccess": false,
     "vim.insertModeKeyBindings": [
         { "before": ["j", "j"], "after": ["<Esc>"] }
     ],
