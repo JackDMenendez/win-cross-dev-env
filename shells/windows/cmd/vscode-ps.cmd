@@ -7,7 +7,7 @@ rem --- Load your global baseline environment ---
 rem     msys2-tools is last so C:\msys64\ucrt64\bin + C:\msys64\usr\bin are
 rem     APPENDED to PATH (native Windows keeps precedence; ucrt64 toolchain is
 rem     still reachable for gcc/make/pkg-config etc.).
-call "%~dp0env\requires" global win git-cli miktex sagemath vscode msys2-tools
+call "%~dp0env\requires" global win git-cli miktex vscode msys2-tools
 if %errorlevel% neq 0 exit /b 1
 set "WCDE_VSCODE_PROFILE=ps"
 call "%~dp0..\tools\vscode-isolation.cmd" "!TARGET!"
