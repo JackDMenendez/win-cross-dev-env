@@ -13,7 +13,7 @@ setlocal enabledelayedexpansion
 call "%~dp0lib\vscode-launcher-lib.cmd" "%~1"
 if %errorlevel% neq 0 goto COMPLETE
 rem --- Load only the lean web-authoring baseline ---
-call "%~dp0env\requires.cmd" global git-cli quarto vscode
+call "%~dp0env\requires.cmd" global git-cli quarto vsvim nvim vscode
 if %errorlevel% neq 0 exit /b 1
 rem --- No MSVC, no pwsh (and its python.exe), no TeX/Sage/Perl ---
 rem --- Python, if the site executes code cells, comes from the project venv ---

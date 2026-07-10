@@ -43,6 +43,9 @@ set "GIT_CLI_ENV=%DEV_SHELL_PATH%\shells\windows\cmd\env\git-cli-env.cmd"
 set "GIT_CLI_ENV_JSON=%GIT_CLI_ENV:\=\\%"
 set "CMD_EXE=%SystemRoot%\System32\cmd.exe"
 set "CMD_EXE_JSON=%CMD_EXE:\=\\%"
+rem --- Native Neovim path for the Vim extension's Neovim integration. JSON needs
+rem     forward slashes; a raw C:\... would read \t \n \b as escapes. ---
+set "WCDE_NVIM_FULL_PATH_JSON=%WCDE_NVIM_FULL_PATH:\=/%"
 
 if not exist "%TARGET%\.vscode" (
     mkdir "%TARGET%\.vscode" >nul 2>&1
@@ -82,18 +85,29 @@ echo     },>> "%TARGET%\.vscode\settings.json"
 ::       added autosave preference.
 echo     "files.autoSaveDelay": 5000,>> "%TARGET%\.vscode\settings.json"
 echo     "files.autoSave": "afterDelay",>> "%TARGET%\.vscode\settings.json"
-echo     "vim.easymotion": true,>> "%TARGET%\.vscode\settings.json"
-echo     "vim.incsearch": true,>> "%TARGET%\.vscode\settings.json"
-echo     "vim.useSystemClipboard": true,>> "%TARGET%\.vscode\settings.json"
-echo     "vim.useCtrlKeys": true,>> "%TARGET%\.vscode\settings.json"
-echo     "vim.hlsearch": true,>> "%TARGET%\.vscode\settings.json"
-echo     "vim.leader": "<space>",>> "%TARGET%\.vscode\settings.json"
-echo     "vim.handleKeys": {>> "%TARGET%\.vscode\settings.json"
-echo        "<C-a>": false,>> "%TARGET%\.vscode\settings.json"
-echo        "<C-f>": false,>> "%TARGET%\.vscode\settings.json"
-echo        "<C-v>": false,>> "%TARGET%\.vscode\settings.json"
-echo        "<C-x>": false>> "%TARGET%\.vscode\settings.json"
-echo     },>> "%TARGET%\.vscode\settings.json"
+::       Vim extension (VSCodeVim) settings, written only when vsvim-env is active
+::       (WCDE_VSVIM_ACTIVE); otherwise the extension is disabled for this workspace.
+::       Neovim ex-command integration is layered in only when nvim-env is active.
+if defined WCDE_VSVIM_ACTIVE (
+    echo     "vim.easymotion": true,>> "%TARGET%\.vscode\settings.json"
+    echo     "vim.incsearch": true,>> "%TARGET%\.vscode\settings.json"
+    echo     "vim.useSystemClipboard": true,>> "%TARGET%\.vscode\settings.json"
+    echo     "vim.useCtrlKeys": true,>> "%TARGET%\.vscode\settings.json"
+    echo     "vim.hlsearch": true,>> "%TARGET%\.vscode\settings.json"
+    echo     "vim.leader": "<space>",>> "%TARGET%\.vscode\settings.json"
+    if defined WCDE_NVIM_ACTIVE (
+        echo     "vim.enableNeovim": true,>> "%TARGET%\.vscode\settings.json"
+        echo     "vim.neovimPath": "%WCDE_NVIM_FULL_PATH_JSON%",>> "%TARGET%\.vscode\settings.json"
+    )
+    echo     "vim.handleKeys": {>> "%TARGET%\.vscode\settings.json"
+    echo        "<C-a>": false,>> "%TARGET%\.vscode\settings.json"
+    echo        "<C-f>": false,>> "%TARGET%\.vscode\settings.json"
+    echo        "<C-v>": false,>> "%TARGET%\.vscode\settings.json"
+    echo        "<C-x>": false>> "%TARGET%\.vscode\settings.json"
+    echo     }>> "%TARGET%\.vscode\settings.json"
+) else (
+    echo     "vim.disableExtension": true>> "%TARGET%\.vscode\settings.json"
+)
 echo }>> "%TARGET%\.vscode\settings.json"
 echo  Windows-native vscode environment
 cat "%TARGET%\.vscode\settings.json"

@@ -1,64 +1,16 @@
 #!/usr/bin/env bash
 
-# repo-setup.sh - Clone a repository, prepare VS Code settings, and optionally create a subsystem-local repo venv.
+# repo-setup.sh - Clone a repository, write MSYS2-flavored VS Code settings
+# (subsystem bash terminal + GNU compiler), and install its requirements into the
+# ONE canonical native-Windows venv (%USERPROFILE%\.venv-win), invoked by its
+# Windows path from this shell. No per-subsystem venv is created: every DCL repo
+# shares the canonical venv for Python (per the global CLAUDE.md canonical-
+# interpreter policy). MSYS2's own python is a C/Fortran toolchain, not a project
+# interpreter; when a package must be GNU-toolchain-compiled, build that venv
+# explicitly via build-repo-venv.sh instead. Pass --no-venv to clone + write
+# settings only, skipping the dependency install into the canonical venv.
 # Usage: repo-setup.sh <github-url> <project-dir> [--no-venv]
 set -euo pipefail
-
-venv_suffix() {
-    case "$MSYSTEM" in
-        UCRT64)
-            printf 'ucrt64\n'
-            ;;
-        MINGW64)
-            printf 'mingw64\n'
-            ;;
-        CLANG64)
-            printf 'clang64\n'
-            ;;
-        MSYS)
-            printf 'msys\n'
-            ;;
-        *)
-            echo "ERROR: Unsupported MSYSTEM: $MSYSTEM"
-            exit 1
-            ;;
-    esac
-}
-
-resolve_python() {
-    local suffix
-    suffix=$(venv_suffix)
-
-    local candidates=(
-        "$PWD/.venv-$suffix/bin/python.exe"
-        "$PWD/.venv-$suffix/bin/python"
-        "$PWD/.venv-$suffix/Scripts/python.exe"
-        "$PWD/.venv/bin/python.exe"
-        "$PWD/.venv/bin/python"
-        "$PWD/.venv/Scripts/python.exe"
-        "$HOME/.venv-$suffix/bin/python.exe"
-        "$HOME/.venv-$suffix/bin/python"
-        "$HOME/.venv-$suffix/Scripts/python.exe"
-        "$HOME/.venv/bin/python.exe"
-        "$HOME/.venv/bin/python"
-        "$HOME/.venv/Scripts/python.exe"
-    )
-
-    local candidate
-    for candidate in "${candidates[@]}"; do
-        if [ -x "$candidate" ]; then
-            if [[ "$candidate" == "$PWD/"* ]]; then
-                printf '${workspaceFolder}/%s\n' "${candidate#"$PWD/"}"
-            else
-                cygpath -m "$candidate"
-            fi
-            return
-        fi
-    done
-
-    echo "ERROR: No Python interpreter found for $MSYSTEM"
-    exit 1
-}
 
 URL="$1"
 DIR="$2"
@@ -74,7 +26,8 @@ if [ -n "$SKIP_VENV" ] && [ "$SKIP_VENV" != "--no-venv" ]; then
     exit 1
 fi
 
-# Detect subsystem -> default terminal profile + C/C++ compiler path.
+# Detect subsystem -> default terminal profile + C/C++ compiler path (the MSYS2
+# toolchain side; the Python interpreter is the canonical native venv regardless).
 case "$MSYSTEM" in
     UCRT64)
         TERMINAL="UCRT64"
@@ -103,109 +56,40 @@ git clone "$URL" "$DIR"
 
 cd "$DIR"
 
-suffix=$(venv_suffix)
-venv_dir=".venv-$suffix"
-
 if [ "$SKIP_VENV" != "--no-venv" ]; then
-    # Determine canonical python for venv creation
-    case "$MSYSTEM" in
-        UCRT64)
-            canonical_python="/ucrt64/bin/python"
-            CC="/ucrt64/bin/gcc"
-            CXX="/ucrt64/bin/g++"
-            PKG_CONFIG_PATH="/ucrt64/tools/pkgconfig:/ucrt64/share/pkgconfig"
-            PACMAN_PREFIX="mingw-w64-ucrt-x86_64-"
-            ;;
-        MINGW64)
-            canonical_python="/mingw64/bin/python"
-            CC="/mingw64/bin/gcc"
-            CXX="/mingw64/bin/g++"
-            PKG_CONFIG_PATH="/mingw64/tools/pkgconfig:/mingw64/share/pkgconfig"
-            PACMAN_PREFIX="mingw-w64-x86_64-"
-            ;;
-        CLANG64)
-            canonical_python="/clang64/bin/python"
-            CC="/clang64/bin/clang"
-            CXX="/clang64/bin/clang++"
-            PKG_CONFIG_PATH="/clang64/tools/pkgconfig:/clang64/share/pkgconfig"
-            PACMAN_PREFIX="mingw-w64-clang-x86_64-"
-            ;;
-        MSYS)
-            canonical_python="/usr/bin/python"
-            CC="/usr/bin/gcc"
-            CXX="/usr/bin/g++"
-            PKG_CONFIG_PATH="/usr/tools/pkgconfig:/usr/share/pkgconfig"
-            PACMAN_PREFIX=""
-            ;;
-        *)
-            echo "ERROR: Unsupported MSYSTEM for canonical python: $MSYSTEM"
-            exit 1
-            ;;
-    esac
+    # --- Install into the ONE canonical native-Windows venv; never create a
+    #     per-subsystem venv. The native venv runs fine invoked from this shell. ---
+    win_userprofile="${USERPROFILE:-$(cygpath -w "$HOME")}"
+    canonical_venv="$(cygpath -u "$win_userprofile")/.venv-win"
+    canonical_python="$canonical_venv/Scripts/python.exe"
 
-    # Create venv if it doesn't exist
-    if [ ! -d "$venv_dir" ]; then
-        echo "Creating $venv_dir"
-        "$canonical_python" -m venv --system-site-packages "$venv_dir"
-    fi
-
-    venv_python="$venv_dir/bin/python"
-    if [ ! -x "$venv_python" ] && [ -x "$venv_dir/Scripts/python.exe" ]; then
-        venv_python="$venv_dir/Scripts/python.exe"
+    if [ ! -x "$canonical_python" ]; then
+        echo "ERROR: canonical venv not found at $canonical_venv"
+        echo "Build it first (build-canonical-venv), then re-run."
+        exit 1
     fi
 
     # Install requirements if file exists
     if [ -f "virtual-env-requirements.txt" ]; then
-        echo "Installing requirements from virtual-env-requirements.txt"
-
-        # GPU guard: CuPy is native-Windows-only in this environment. There is no
-        # wheel for the MSYS2 platform tag (mingw_x86_64_ucrt_gnu) and no pacman
-        # package, so pip falls back to building the sdist -- a runaway parallel
-        # NVCC/C++ compile that spawns thousands of processes and exhausts system
-        # RAM. Never let that happen here: strip cupy from the requirements and
-        # point the user at the canonical Windows venv (.venv-win, via vscode-ps.cmd).
+        echo "Installing requirements from virtual-env-requirements.txt into $canonical_venv"
+        # CuPy must come from the CUDA-toolkit wheels only; a bare 'cupy' sdist
+        # triggers the runaway NVCC source build (the memory bomb). Install it via
+        # the known-good binary recipe and keep it out of the generic pip run.
         if grep -qiE "^[[:space:]]*cupy" virtual-env-requirements.txt; then
-            echo "############################################################"
-            echo "# SKIPPING cupy: not buildable under $MSYSTEM (would exhaust RAM)."
-            echo "# Use the canonical Windows venv (.venv-win) via vscode-ps.cmd for GPU work."
-            echo "############################################################"
+            echo "Detected cupy requirement - installing cupy-cuda12x[ctk] binary-only"
+            "$canonical_python" -m pip install --only-binary=:all: "cupy-cuda12x[ctk]"
+            grep -viE "^[[:space:]]*cupy" virtual-env-requirements.txt > virtual-env-requirements-temp.txt || true
+            "$canonical_python" -m pip install -r virtual-env-requirements-temp.txt
+            rm -f virtual-env-requirements-temp.txt
+        else
+            "$canonical_python" -m pip install -r virtual-env-requirements.txt
         fi
-
-        # Working copy with cupy stripped (see guard above); heavy packages are
-        # further removed below when installed via pacman instead of compiling.
-        grep -viE "^[[:space:]]*cupy" virtual-env-requirements.txt > virtual-env-requirements-temp.txt || true
-
-        # For MSYS2 subsystems, install heavy packages via pacman to avoid compilation issues
-        pacman_packages=""
-        if grep -q "^pandas==" virtual-env-requirements-temp.txt; then
-            pacman_packages="$pacman_packages ${PACMAN_PREFIX}python-pandas"
-        fi
-        if grep -q "^scipy==" virtual-env-requirements-temp.txt; then
-            pacman_packages="$pacman_packages ${PACMAN_PREFIX}python-scipy"
-        fi
-        if grep -q "^pillow==" virtual-env-requirements-temp.txt; then
-            pacman_packages="$pacman_packages ${PACMAN_PREFIX}python-pillow"
-        fi
-        if [ -n "$pacman_packages" ]; then
-            echo "Installing packages via pacman: $pacman_packages"
-            pacman -S --noconfirm $pacman_packages || echo "Some packages not available via pacman, proceeding with pip"
-            # Drop the pacman-installed packages from the pip requirements too.
-            grep -v "^pandas==" virtual-env-requirements-temp.txt | grep -v "^scipy==" | grep -v "^pillow==" > virtual-env-requirements-temp2.txt || true
-            mv virtual-env-requirements-temp2.txt virtual-env-requirements-temp.txt
-        fi
-
-        # --only-binary on cupy is a backstop: even a transitive cupy dependency
-        # fails fast instead of triggering the runaway source build.
-        CC="$CC" CXX="$CXX" PKG_CONFIG_PATH="$PKG_CONFIG_PATH" "$venv_python" -m pip install --no-cache-dir \
-            --only-binary=cupy,cupy-cuda11x,cupy-cuda12x \
-            -r virtual-env-requirements-temp.txt
-        rm -f virtual-env-requirements-temp.txt
     fi
 
     echo "Installing baseline repo tooling"
-    "$venv_python" -m pip install --no-cache-dir isort
+    "$canonical_python" -m pip install isort
 
-    PYTHON="$(resolve_python)"
+    PYTHON="$(cygpath -m "$canonical_python")"
 fi
 
 mkdir -p .vscode
@@ -265,9 +149,9 @@ cat >> .vscode/settings.json <<EOF
 }
 EOF
 
-echo "Repo initialized for $MSYSTEM"
+echo "Repo initialized for $MSYSTEM (Python -> canonical .venv-win)"
 if [ "$SKIP_VENV" = "--no-venv" ]; then
-    echo "Virtual environment setup skipped"
+    echo "Dependency install skipped (--no-venv)"
 fi
 echo "VS Code settings created"
 
@@ -275,6 +159,5 @@ if [ "$SKIP_VENV" = "--no-venv" ]; then
     exit 0
 fi
 
-# Activate the venv in the current shell
-source "$venv_dir/bin/activate"
-
+# Activate the canonical venv in the current shell
+source "$canonical_venv/Scripts/activate"

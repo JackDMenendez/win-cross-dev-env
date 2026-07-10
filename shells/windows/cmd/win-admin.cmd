@@ -4,7 +4,7 @@ setlocal
 set WIN_ADMIN_RC=0
 call "%~dp0lib\set-prompt.cmd" admin
 rem --- Load global baseline environment ---
-call "%~dp0env\requires.cmd" global win-dev git-cli win-admin
+call "%~dp0env\requires.cmd" global win-dev git-cli win-admin vim
 if %errorlevel% neq 0 (
     echo Error: %errorlevel% - required dependencies not found. Please ensure that you have the necessary tools installed.
     exit /b 1

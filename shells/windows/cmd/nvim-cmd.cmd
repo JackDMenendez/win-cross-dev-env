@@ -8,7 +8,7 @@ set SHELL_WIN_ENV=
 set SHELL_WIN_DEV_ENV=
 
 rem --- Provide a C compiler (gcc) as a fallback for Neovim Treesitter ---
-call "%~dp0env\requires.cmd" global win-dev
+call "%~dp0env\requires.cmd" global win-dev nvim
 if %errorlevel% neq 0 (
     echo Error: %errorlevel% - required dependencies not found. Please ensure that you have the necessary tools installed.
     exit /b 1

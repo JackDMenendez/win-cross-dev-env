@@ -59,6 +59,13 @@ comments allowed). On the **first** launch of a profile the helper installs
 
 - **`common.txt`** goes into every profile: Vim, GitLens, Claude Code, EditorConfig.
   (VS Code cannot live-share a partial extensions dir, so shared = re-installed.)
+  - The Vim extension (`vscodevim.vim`) runs with **Neovim ex-command integration
+    enabled** (`vim.enableNeovim` + `vim.neovimPath: "nvim"` in
+    [`user-settings.json`](user-settings.json)). That needs a real `nvim` on PATH,
+    so every `vscode-*.cmd` launcher adds `nvim` to its `requires` list, which runs
+    [`cmd\env\nvim-env.cmd`](../../cmd/env/nvim-env.cmd) to prepend the canonical
+    native Neovim (`C:\tools\neovim`). Classic Vim has a parallel
+    [`vim-env.cmd`](../../cmd/env/vim-env.cmd) for shells that want `vim`/`gvim`.
 - **Claude Code** rides in `common.txt`, so it is present in every profile; its
   state lives in `%USERPROFILE%\.claude` and is shared regardless of profile.
 
