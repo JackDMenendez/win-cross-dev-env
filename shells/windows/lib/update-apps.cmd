@@ -8,9 +8,6 @@ winget list > "%USERPROFILE%\winget-apps.txt"
 type "%USERPROFILE%\winget-apps.txt"
 echo ---- Updating GHCup and Haskell Toolchain ----
 call ghcup.cmd upgrade
-echo ---- List of Installed GHCup Packages ----
-ghcup list > "%USERPROFILE%\ghcup-packages.txt"
-type "%USERPROFILE%\ghcup-packages.txt"
 echo ---- Updating Chocolatey Apps ----
 choco upgrade chocolatey -y
 choco upgrade all -y
@@ -31,4 +28,7 @@ echo ---- recording requirments in "%USERPROFILE%/requirements.txt" ----
 pip freeze > "%USERPROFILE%/requirements.txt"
 type "%USERPROFILE%/requirements.txt"
 pushd "C:\Users\jackd\source\repos\physics\Papers\discrete-causal-lattice"
+echo ---- List of Installed GHCup Packages ----
+ghcup list > "%USERPROFILE%\ghcup-packages.txt"
+type "%USERPROFILE%\ghcup-packages.txt"
 
