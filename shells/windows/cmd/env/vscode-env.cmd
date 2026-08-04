@@ -4,7 +4,7 @@ if not "%SHELL_VSCODE_ENV%0"=="0" exit /b 0
 
 set SHELL_VSCODE_ENV=1
 
-call "%~dp0requires.cmd" global
+call "%~dp0requires.cmd" global pwsh
 if %errorlevel% neq 0 exit /b %errorlevel%
 echo ------------ vscode
 REM --- Global variables shared by all environments ---

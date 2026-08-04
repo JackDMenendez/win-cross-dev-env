@@ -22,6 +22,7 @@ if not exist %WCDE_POWERSHELL_COMMAND_PATH% (
     echo Warning: %WCDE_POWERSHELL_COMMAND% not found in %WCDE_LOCAL_WINDOWS_APPS%. PowerShell features may not work as expected.
     exit /b 1
 )
+%WCDE_POWERSHELL_COMMAND_PATH% --version
 echo PowerShell found at %WCDE_POWERSHELL_COMMAND_PATH%. Adding %WCDE_LOCAL_WINDOWS_APPS% to the end of the PATH.
 set PATH=%path%;%WCDE_LOCAL_WINDOWS_APPS%
 

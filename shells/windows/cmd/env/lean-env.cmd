@@ -2,7 +2,7 @@
 @echo off
 if not "%SHELL_LEAN_ENV%0"=="0" exit /b 0
 set SHELL_LEAN_ENV=1
-call "%~dp0requires.cmd" global
+call "%~dp0requires.cmd" global mathlib
 if %errorlevel% neq 0 exit /b %errorlevel%
 echo ------------ vsvim
 :: Use the presence of this environment variable to detect
