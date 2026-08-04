@@ -12,22 +12,17 @@ if "%~f1"=="" (
     set "TARGET=%~f1"
     echo Target directory is: %TARGET%
 )
-rem do we have python env?
+rem do we have python env? WCDE_INCLUDE_PYTHON_VENV is set by env\python-env.cmd,
+rem which the launcher loads only when `python` is in its requires list.
 if "%WCDE_INCLUDE_PYTHON_VENV%0" == "0" goto :setup_vscode_skip_venv
-rem --- Prefer a native Windows-layout venv (Scripts\python.exe). A UCRT64/MSYS2
-rem     venv uses bin\ and is intentionally ignored here. Set PYTHON in EVERY
-rem     branch so the interpreter path is never left empty.
-if exist "%TARGET%\.venv-win\Scripts\python.exe" (
-    call "%TARGET%\.venv-win\Scripts\activate.bat"
-    set "PYTHON=%TARGET%\.venv-win\Scripts\python.exe"
-) else if exist "%TARGET%\.venv\Scripts\python.exe" (
-    call "%TARGET%\.venv\Scripts\activate.bat"
-    set "PYTHON=%TARGET%\.venv\Scripts\python.exe"
-) else if exist "%CANONICAL_WIN_VENV%\Scripts\python.exe" (
-    call "%CANONICAL_WIN_VENV%\Scripts\activate.bat"
-    set "PYTHON=%CANONICAL_WIN_VENV%\Scripts\python.exe"
+rem --- Do NOT re-discover or re-activate the venv here: python activation flows
+rem     through requires.cmd python only. python-env.cmd -> python-activate.cmd
+rem     already selected the interpreter and published it as
+rem     DEV_SHELL_ACTIVE_VENV_PATH; just point VS Code at that Scripts\python.exe.
+if defined DEV_SHELL_ACTIVE_VENV_PATH (
+    set "PYTHON=%DEV_SHELL_ACTIVE_VENV_PATH%\Scripts\python.exe"
 ) else (
-    echo Warning: No native Windows Python interpreter found for VS Code settings. Please ensure Python is installed and available in the PATH.
+    echo Warning: WCDE_INCLUDE_PYTHON_VENV is set but python-env.cmd selected no venv -- leaving the VS Code interpreter as bare python.
     set "PYTHON=python"
 )
 

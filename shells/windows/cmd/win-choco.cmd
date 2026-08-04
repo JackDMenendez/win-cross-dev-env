@@ -2,12 +2,15 @@
 @echo off
 setlocal
 set WIN_CHOCO_RC=0
-rem --- Load Python venv activation logic, which sets DEV_SHELL_ACTIVE_VENV_* variables ---
-call "%~dp0lib\python-activate.cmd"
+rem --- Clear any inherited activation marker; python-env.cmd (loaded via the
+rem     `python` requirement below) sets WIN_DEV_ACTIVATE if a venv is found. ---
+set "WIN_DEV_ACTIVATE="
 rem --- Set prompt to indicate Chocolatey Shell ---
 call "%~dp0lib\set-prompt.cmd" admin-choco
-rem --- Load global baseline environment ---
-call "%~dp0env\requires.cmd" global ghcup win-choco vim
+rem --- Load global baseline environment. `python` routes venv activation
+rem     through env\python-env.cmd (which sets WIN_DEV_ACTIVATE and the
+rem     DEV_SHELL_ACTIVE_VENV_* variables) -- the one canonical activation path. ---
+call "%~dp0env\requires.cmd" global python ghcup win-choco vim
 if %errorlevel% neq 0 (
     echo Error: %errorlevel% - required dependencies not found. Please ensure that you have the necessary tools installed.
     exit /b 1

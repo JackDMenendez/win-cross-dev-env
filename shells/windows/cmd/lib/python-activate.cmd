@@ -16,10 +16,13 @@ if exist "%CD%\.venv-win\Scripts\activate.bat" (
     set "WIN_DEV_ACTIVATE=%DEV_SHELL_DEFAULT_VENV%\Scripts\activate.bat"
     set "DEV_SHELL_ACTIVE_VENV_KIND=default"
     set "DEV_SHELL_ACTIVE_VENV_PATH=%DEV_SHELL_DEFAULT_VENV%"
-) else if exist "%USERPROFILE%\.venv\Scripts\activate.bat" (
-    set "WIN_DEV_ACTIVATE=%USERPROFILE%\.venv\Scripts\activate.bat"
+) else if exist "%CANONICAL_WIN_VENV%\Scripts\activate.bat" (
+    rem --- Canonical Windows venv at %CANONICAL_WIN_VENV%, defined by
+    rem     global-var.cmd. The old %USERPROFILE%\.venv default was removed
+    rem     when the repos moved to the single canonical .venv-win. ---
+    set "WIN_DEV_ACTIVATE=%CANONICAL_WIN_VENV%\Scripts\activate.bat"
     set "DEV_SHELL_ACTIVE_VENV_KIND=default"
-    set "DEV_SHELL_ACTIVE_VENV_PATH=%USERPROFILE%\.venv"
+    set "DEV_SHELL_ACTIVE_VENV_PATH=%CANONICAL_WIN_VENV%"
 )
 
 exit /b 0
