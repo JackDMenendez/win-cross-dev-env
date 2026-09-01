@@ -2,5 +2,12 @@
 # common.txt is installed too (Vim, GitLens, Claude Code, EditorConfig);
 # list only web-specific extras here. R was intentionally dropped from this
 # flavor's requires, so no R extensions here.
+#
+# code-spell-checker is REQUIRED, not a preference: dcl-website ships a real
+# cspell.json at its repo root (custom dictionary - arXiv, dcl_core, Poincare,
+# Zenodo, ORCID ... - plus ignorePaths). Without the extension that reads it,
+# that config is inert and 46 prose-heavy .qmd files author with no spell check.
+# Requested by handoff 2026-07-07-wcde-web-profile-code-spell-checker.
 
 quarto.quarto
+streetsidesoftware.code-spell-checker
