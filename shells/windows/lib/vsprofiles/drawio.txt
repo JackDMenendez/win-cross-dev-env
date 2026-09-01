@@ -1,0 +1,6 @@
+# drawio.txt - vscode-drawio profile: draw.io diagram editing in VS Code.
+# common.txt is installed too; list only profile-specific extras here.
+# hediet.vscode-drawio provides the *.svg / *.drawio editor referenced by the
+# workbench.editorAssociations entry setup-vscode.cmd writes (hediet.vscode-drawio-text).
+
+hediet.vscode-drawio

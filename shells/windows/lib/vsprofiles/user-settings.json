@@ -11,6 +11,12 @@
     "window.restoreWindows": "none",
     "github.gitProtocol": "ssh",
     "security.restrictUNCAccess": false,
+    "ltex.language": "en-US",
+    "ltex.configurationTarget": {
+        "dictionary": "workspaceFolderExternalFile",
+        "disabledRules": "workspaceFolderExternalFile",
+        "hiddenFalsePositives": "workspaceFolderExternalFile"
+    },
     "vim.insertModeKeyBindings": [
         { "before": ["j", "j"], "after": ["<Esc>"] }
     ],

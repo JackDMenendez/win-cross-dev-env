@@ -1,0 +1,25 @@
+# write.txt - vscode-write profile: creative writing / long-form prose authoring.
+# common.txt is installed too (Vim, GitLens, Claude Code, EditorConfig);
+# list only profile-specific extras here.
+#
+# The three checkers are complementary, not redundant -- each answers a different
+# question, and turning on only one leaves an obvious gap:
+#   code-spell-checker  is this WORD real? Backed by a per-project cspell.json, which
+#                       is where invented character/place names get whitelisted.
+#   ltex-plus           is this SENTENCE grammatical? LanguageTool, Markdown/LaTeX
+#                       aware. This is the MAINTAINED fork; the original
+#                       valentjn.vscode-ltex is abandoned. It fetches its own offline
+#                       LanguageTool, so nothing needs Java on PATH.
+#   vale-vscode         does this prose follow MY rules? Enforces the repo's .vale.ini
+#                       (write-good / proselint / a house style). It is a thin client
+#                       over the `vale` binary -- inert without cmd\env\vale-env.cmd.
+#
+# markdown-all-in-one supplies the drafting ergonomics (TOC, list continuation,
+# status-bar word count). quarto.quarto renders the same sources to HTML, matching
+# the quarto on this flavor's PATH.
+
+streetsidesoftware.code-spell-checker
+ltex-plus.vscode-ltex-plus
+chrischinchilla.vale-vscode
+yzhang.markdown-all-in-one
+quarto.quarto

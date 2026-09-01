@@ -36,6 +36,8 @@ The helper appends `.vsisolation/` to a target repo's `.gitignore` automatically
 | `tex`     | vscode-miktex                   | `tex.txt` |
 | `python`  | vscode-python                   | `python.txt` |
 | `exp-tex` | vscode-exp-tex                  | `exp-tex.txt` (python + LaTeX) |
+| `drawio`  | vscode-drawio                   | `drawio.txt` (draw.io diagrams; inherits the lean toolset) |
+| `write`   | vscode-write                    | `write.txt` (creative writing; Pandoc/Vale/Calibre, no interpreter) |
 
 ## How the dedicated Claude Code learns its toolset
 

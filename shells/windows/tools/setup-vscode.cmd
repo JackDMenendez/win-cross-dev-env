@@ -80,6 +80,15 @@ echo     },>> "%TARGET%\.vscode\settings.json"
 ::       added autosave preference.
 echo     "files.autoSaveDelay": 5000,>> "%TARGET%\.vscode\settings.json"
 echo     "files.autoSave": "afterDelay",>> "%TARGET%\.vscode\settings.json"
+::       draw.io Integration: open *.svg as diagrams in the draw.io editor, written
+::       only when drawio-env is active (WCDE_DRAWIO_ACTIVE). The vim block below
+::       always emits a following key, so the trailing comma here stays valid.
+::       Needs the hediet.vscode-drawio extension (drawio profile manifest).
+if defined WCDE_DRAWIO_ACTIVE (
+    echo     "workbench.editorAssociations": {>> "%TARGET%\.vscode\settings.json"
+    echo         "*.svg": "hediet.vscode-drawio-text">> "%TARGET%\.vscode\settings.json"
+    echo     },>> "%TARGET%\.vscode\settings.json"
+)
 ::       Vim extension (VSCodeVim) settings, written only when vsvim-env is active
 ::       (WCDE_VSVIM_ACTIVE); otherwise the extension is disabled for this workspace.
 ::       Neovim ex-command integration is layered in only when nvim-env is active.
