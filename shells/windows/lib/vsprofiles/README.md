@@ -38,6 +38,40 @@ The helper appends `.vsisolation/` to a target repo's `.gitignore` automatically
 | `exp-tex` | vscode-exp-tex                  | `exp-tex.txt` (python + LaTeX) |
 | `drawio`  | vscode-drawio                   | `drawio.txt` (draw.io diagrams; inherits the lean toolset) |
 | `write`   | vscode-write                    | `write.txt` (creative writing; Pandoc/Vale/Calibre, no interpreter) |
+| `lean`    | vscode-lean                     | `lean.txt` (Lean 4 / Mathlib; LaTeX + graphviz) |
+
+Every launcher must have a row here **and** a matching `<profile>.txt`. Nothing
+enforces the pairing: `install_list` skips a missing manifest with a warning and
+carries on, so an unpaired launcher provisions `common.txt` only and silently
+loses its whole toolset on a fresh machine. `lean` was unpaired from `3066352`
+until 2026-09-04 and is the reason this paragraph exists — re-check the pairing
+whenever a `vscode-*.cmd` is added.
+
+## Known state: the two draw.io builds
+
+There are two draw.io engines on this machine and they are a major version apart:
+the desktop app at `C:\Program Files\draw.io` (**31.3.1**) and the one bundled
+inside `hediet.vscode-drawio` (**30.2.7**). `hediet.vscode-drawio.offline`
+defaults to `true`, so the extension always uses its own bundled build and never
+the desktop one. `extensions.autoUpdate` is `false` in `user-settings.json`
+(deliberate), which freezes that skew rather than letting it drift.
+
+This is known state, not a bug to fix. In particular, do **NOT** set
+`hediet.vscode-drawio.offline` to `false` to "align" them: that routes diagram
+content through `https://embed.diagrams.net/`, which is a network-egress and
+privacy change, not a rendering fix.
+
+The skew only shows up as differing colours when a `.drawio` file **omits**
+colours, because each build then supplies its own defaults. The durable fix is
+explicit `fillColor` / `strokeColor` / `fontColor` in the files, not an editor
+setting. For committed figures the source of truth is the headless CLI —
+`draw.io.exe --export --format png --scale 2 --crop` renders correctly in a few
+seconds, MathJax included — not whichever editor happens to be open.
+
+Version numbers above were measured against the **shared** extensions directory
+(`%USERPROFILE%\.vscode\extensions`). The isolated profiles carry their own copy
+(`hediet.vscode-drawio-1.9.0`), so re-measure per profile before treating these
+exact numbers as applying to a launcher-started window.
 
 ## How the dedicated Claude Code learns its toolset
 

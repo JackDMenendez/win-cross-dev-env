@@ -1,0 +1,41 @@
+# lean.txt - vscode-lean profile (Lean 4 / Mathlib theorem proving).
+# common.txt is installed too (Vim, GitLens, Claude Code, EditorConfig);
+# list only profile-specific extras here.
+#
+# WHY THIS FILE EXISTS: vscode-lean.cmd has set WCDE_VSCODE_PROFILE=lean since
+# d8e6b3d, but the manifest system (3066352) never got a lean.txt. install_list
+# skips a missing manifest with a warning and carries on, so a FRESH provision of
+# this profile installed common.txt only -- silently dropping leanprover.lean4,
+# i.e. the entire reason the launcher exists. The breakage was latent: existing
+# ext dirs were populated by hand and kept working. Reported by handoff
+# 2026-09-04-wcde-lean-profile-missing-manifest.
+#
+# CONTENTS ARE THE LIVE EXT DIR AS OF 2026-09-04, kept verbatim per the owner's
+# call, so a re-provision restores exactly the working set rather than a guess.
+# That handoff flagged insert-unicode, markdown-pdf and even-better-toml as
+# possible one-off installs rather than profile policy; they are retained
+# deliberately. The Lean, LaTeX, drawio and graphviz entries are corroborated by
+# the launcher's own requires line (which puts miktex and graphviz on PATH).
+
+leanprover.lean4
+
+# LaTeX - the launcher pulls miktex onto PATH, so these are deliberate.
+james-yu.latex-workshop
+tecosaur.latex-utilities
+
+# Diagrams - the launcher pulls graphviz onto PATH.
+hediet.vscode-drawio
+purocean.drawio-preview
+geeklearningio.graphviz-markdown-preview
+tintinweb.graphviz-interactive-preview
+stephanvs.dot
+
+# Markdown authoring for the surrounding notes.
+shd101wyy.markdown-preview-enhanced
+yzhang.markdown-all-in-one
+davidanson.vscode-markdownlint
+yzane.markdown-pdf
+
+# Retained per the owner's call; flagged as possible strays by the 2026-09-04 handoff.
+tamasfe.even-better-toml
+brunnerh.insert-unicode

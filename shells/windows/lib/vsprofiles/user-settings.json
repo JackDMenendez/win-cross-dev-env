@@ -11,6 +11,9 @@
     "window.restoreWindows": "none",
     "github.gitProtocol": "ssh",
     "security.restrictUNCAccess": false,
+    "hediet.vscode-drawio.theme": "kennedy",
+    "hediet.vscode-drawio.appearance": "light",
+    "drawio-inline-editor.theme": "light",
     "ltex.language": "en-US",
     "ltex.configurationTarget": {
         "dictionary": "workspaceFolderExternalFile",
